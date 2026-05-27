@@ -3,7 +3,7 @@ import sys
 import pygame
 
 from config import FPS, WINDOW_SIZE, WINDOW_TITLE
-from engine.scenes.title_scene import TitleScene
+from engine.scenes.game_scene import GameScene
 
 
 class Game:
@@ -13,7 +13,7 @@ class Game:
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         self.clock = pygame.time.Clock()
         self.running = True
-        self.current_scene = TitleScene(self)
+        self.current_scene = GameScene(self)
 
     def run(self):
         while self.running:
