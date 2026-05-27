@@ -1,6 +1,5 @@
-from engine import *
+"""Compatibility wrapper for older imports."""
 
-class Camera:
-    ...
+from engine.camera import Camera
 
-    
+
