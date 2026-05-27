@@ -1,10 +1,11 @@
 import pygame
 
+from engine.entities.entity import Entity
 
-class Player:
+
+class Player(Entity):
     def __init__(self, x, y):
-        self.rect = pygame.Rect(x, y, 32, 48)
-        self.velocity = pygame.Vector2(0, 0)
+        super().__init__(x, y, 32, 48, (220, 220, 255))
         self.speed = 220
         self.jump_power = 420
         self.gravity = 1200
@@ -22,10 +23,10 @@ class Player:
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             movement += 1
 
-        self.rect.x += int(movement * self.speed * dt)
+        self.move_x(movement * self.speed * dt)
 
         self.velocity.y += self.gravity * dt
-        self.rect.y += int(self.velocity.y * dt)
+        self.move_y(self.velocity.y * dt)
 
         self.on_ground = False
         for platform in platforms:
@@ -33,6 +34,3 @@ class Player:
                 self.rect.bottom = platform.top
                 self.velocity.y = 0
                 self.on_ground = True
-
-    def draw(self, surface, offset=(0, 0)):
-        pygame.draw.rect(surface, (220, 220, 255), self.rect.move(-offset[0], -offset[1]))
