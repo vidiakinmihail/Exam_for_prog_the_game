@@ -1,0 +1,1762 @@
+{
+  "tile_size": 16,
+  "window_tiles": [
+    20,
+    15
+  ],
+  "tiles": [
+    {
+      "file": "tiles\\tile_0_0.png",
+      "row": 0,
+      "col": 0,
+      "index": 0
+    },
+    {
+      "file": "tiles\\tile_0_1.png",
+      "row": 0,
+      "col": 1,
+      "index": 1
+    },
+    {
+      "file": "tiles\\tile_0_2.png",
+      "row": 0,
+      "col": 2,
+      "index": 2
+    },
+    {
+      "file": "tiles\\tile_0_3.png",
+      "row": 0,
+      "col": 3,
+      "index": 3
+    },
+    {
+      "file": "tiles\\tile_0_4.png",
+      "row": 0,
+      "col": 4,
+      "index": 4
+    },
+    {
+      "file": "tiles\\tile_0_5.png",
+      "row": 0,
+      "col": 5,
+      "index": 5
+    },
+    {
+      "file": "tiles\\tile_0_6.png",
+      "row": 0,
+      "col": 6,
+      "index": 6
+    },
+    {
+      "file": "tiles\\tile_0_7.png",
+      "row": 0,
+      "col": 7,
+      "index": 7
+    },
+    {
+      "file": "tiles\\tile_0_8.png",
+      "row": 0,
+      "col": 8,
+      "index": 8
+    },
+    {
+      "file": "tiles\\tile_0_9.png",
+      "row": 0,
+      "col": 9,
+      "index": 9
+    },
+    {
+      "file": "tiles\\tile_0_10.png",
+      "row": 0,
+      "col": 10,
+      "index": 10
+    },
+    {
+      "file": "tiles\\tile_0_11.png",
+      "row": 0,
+      "col": 11,
+      "index": 11
+    },
+    {
+      "file": "tiles\\tile_0_12.png",
+      "row": 0,
+      "col": 12,
+      "index": 12
+    },
+    {
+      "file": "tiles\\tile_0_13.png",
+      "row": 0,
+      "col": 13,
+      "index": 13
+    },
+    {
+      "file": "tiles\\tile_0_14.png",
+      "row": 0,
+      "col": 14,
+      "index": 14
+    },
+    {
+      "file": "tiles\\tile_0_15.png",
+      "row": 0,
+      "col": 15,
+      "index": 15
+    },
+    {
+      "file": "tiles\\tile_0_16.png",
+      "row": 0,
+      "col": 16,
+      "index": 16
+    },
+    {
+      "file": "tiles\\tile_1_0.png",
+      "row": 1,
+      "col": 0,
+      "index": 17
+    },
+    {
+      "file": "tiles\\tile_1_1.png",
+      "row": 1,
+      "col": 1,
+      "index": 18
+    },
+    {
+      "file": "tiles\\tile_1_2.png",
+      "row": 1,
+      "col": 2,
+      "index": 19
+    },
+    {
+      "file": "tiles\\tile_1_3.png",
+      "row": 1,
+      "col": 3,
+      "index": 20
+    },
+    {
+      "file": "tiles\\tile_1_4.png",
+      "row": 1,
+      "col": 4,
+      "index": 21
+    },
+    {
+      "file": "tiles\\tile_1_5.png",
+      "row": 1,
+      "col": 5,
+      "index": 22
+    },
+    {
+      "file": "tiles\\tile_1_7.png",
+      "row": 1,
+      "col": 7,
+      "index": 24
+    },
+    {
+      "file": "tiles\\tile_1_8.png",
+      "row": 1,
+      "col": 8,
+      "index": 25
+    },
+    {
+      "file": "tiles\\tile_1_9.png",
+      "row": 1,
+      "col": 9,
+      "index": 26
+    },
+    {
+      "file": "tiles\\tile_1_10.png",
+      "row": 1,
+      "col": 10,
+      "index": 27
+    },
+    {
+      "file": "tiles\\tile_1_11.png",
+      "row": 1,
+      "col": 11,
+      "index": 28
+    },
+    {
+      "file": "tiles\\tile_1_12.png",
+      "row": 1,
+      "col": 12,
+      "index": 29
+    },
+    {
+      "file": "tiles\\tile_1_13.png",
+      "row": 1,
+      "col": 13,
+      "index": 30
+    },
+    {
+      "file": "tiles\\tile_1_14.png",
+      "row": 1,
+      "col": 14,
+      "index": 31
+    },
+    {
+      "file": "tiles\\tile_1_15.png",
+      "row": 1,
+      "col": 15,
+      "index": 32
+    },
+    {
+      "file": "tiles\\tile_1_16.png",
+      "row": 1,
+      "col": 16,
+      "index": 33
+    },
+    {
+      "file": "tiles\\tile_2_2.png",
+      "row": 2,
+      "col": 2,
+      "index": 36
+    },
+    {
+      "file": "tiles\\tile_2_3.png",
+      "row": 2,
+      "col": 3,
+      "index": 37
+    },
+    {
+      "file": "tiles\\tile_2_4.png",
+      "row": 2,
+      "col": 4,
+      "index": 38
+    },
+    {
+      "file": "tiles\\tile_2_7.png",
+      "row": 2,
+      "col": 7,
+      "index": 41
+    },
+    {
+      "file": "tiles\\tile_2_8.png",
+      "row": 2,
+      "col": 8,
+      "index": 42
+    },
+    {
+      "file": "tiles\\tile_2_9.png",
+      "row": 2,
+      "col": 9,
+      "index": 43
+    },
+    {
+      "file": "tiles\\tile_2_10.png",
+      "row": 2,
+      "col": 10,
+      "index": 44
+    },
+    {
+      "file": "tiles\\tile_2_11.png",
+      "row": 2,
+      "col": 11,
+      "index": 45
+    },
+    {
+      "file": "tiles\\tile_2_12.png",
+      "row": 2,
+      "col": 12,
+      "index": 46
+    },
+    {
+      "file": "tiles\\tile_2_13.png",
+      "row": 2,
+      "col": 13,
+      "index": 47
+    },
+    {
+      "file": "tiles\\tile_2_14.png",
+      "row": 2,
+      "col": 14,
+      "index": 48
+    },
+    {
+      "file": "tiles\\tile_2_15.png",
+      "row": 2,
+      "col": 15,
+      "index": 49
+    },
+    {
+      "file": "tiles\\tile_2_16.png",
+      "row": 2,
+      "col": 16,
+      "index": 50
+    },
+    {
+      "file": "tiles\\tile_3_3.png",
+      "row": 3,
+      "col": 3,
+      "index": 54
+    },
+    {
+      "file": "tiles\\tile_3_4.png",
+      "row": 3,
+      "col": 4,
+      "index": 55
+    },
+    {
+      "file": "tiles\\tile_3_5.png",
+      "row": 3,
+      "col": 5,
+      "index": 56
+    },
+    {
+      "file": "tiles\\tile_3_7.png",
+      "row": 3,
+      "col": 7,
+      "index": 58
+    },
+    {
+      "file": "tiles\\tile_3_8.png",
+      "row": 3,
+      "col": 8,
+      "index": 59
+    },
+    {
+      "file": "tiles\\tile_3_9.png",
+      "row": 3,
+      "col": 9,
+      "index": 60
+    },
+    {
+      "file": "tiles\\tile_3_10.png",
+      "row": 3,
+      "col": 10,
+      "index": 61
+    },
+    {
+      "file": "tiles\\tile_3_11.png",
+      "row": 3,
+      "col": 11,
+      "index": 62
+    },
+    {
+      "file": "tiles\\tile_3_12.png",
+      "row": 3,
+      "col": 12,
+      "index": 63
+    },
+    {
+      "file": "tiles\\tile_3_13.png",
+      "row": 3,
+      "col": 13,
+      "index": 64
+    },
+    {
+      "file": "tiles\\tile_3_14.png",
+      "row": 3,
+      "col": 14,
+      "index": 65
+    },
+    {
+      "file": "tiles\\tile_3_15.png",
+      "row": 3,
+      "col": 15,
+      "index": 66
+    },
+    {
+      "file": "tiles\\tile_3_16.png",
+      "row": 3,
+      "col": 16,
+      "index": 67
+    },
+    {
+      "file": "tiles\\tile_4_3.png",
+      "row": 4,
+      "col": 3,
+      "index": 71
+    },
+    {
+      "file": "tiles\\tile_4_4.png",
+      "row": 4,
+      "col": 4,
+      "index": 72
+    },
+    {
+      "file": "tiles\\tile_4_5.png",
+      "row": 4,
+      "col": 5,
+      "index": 73
+    },
+    {
+      "file": "tiles\\tile_4_7.png",
+      "row": 4,
+      "col": 7,
+      "index": 75
+    },
+    {
+      "file": "tiles\\tile_4_8.png",
+      "row": 4,
+      "col": 8,
+      "index": 76
+    },
+    {
+      "file": "tiles\\tile_4_9.png",
+      "row": 4,
+      "col": 9,
+      "index": 77
+    },
+    {
+      "file": "tiles\\tile_4_10.png",
+      "row": 4,
+      "col": 10,
+      "index": 78
+    },
+    {
+      "file": "tiles\\tile_4_11.png",
+      "row": 4,
+      "col": 11,
+      "index": 79
+    },
+    {
+      "file": "tiles\\tile_4_12.png",
+      "row": 4,
+      "col": 12,
+      "index": 80
+    },
+    {
+      "file": "tiles\\tile_4_13.png",
+      "row": 4,
+      "col": 13,
+      "index": 81
+    },
+    {
+      "file": "tiles\\tile_4_14.png",
+      "row": 4,
+      "col": 14,
+      "index": 82
+    },
+    {
+      "file": "tiles\\tile_4_15.png",
+      "row": 4,
+      "col": 15,
+      "index": 83
+    },
+    {
+      "file": "tiles\\tile_4_16.png",
+      "row": 4,
+      "col": 16,
+      "index": 84
+    },
+    {
+      "file": "tiles\\tile_5_3.png",
+      "row": 5,
+      "col": 3,
+      "index": 88
+    },
+    {
+      "file": "tiles\\tile_5_4.png",
+      "row": 5,
+      "col": 4,
+      "index": 89
+    },
+    {
+      "file": "tiles\\tile_5_7.png",
+      "row": 5,
+      "col": 7,
+      "index": 92
+    },
+    {
+      "file": "tiles\\tile_5_8.png",
+      "row": 5,
+      "col": 8,
+      "index": 93
+    },
+    {
+      "file": "tiles\\tile_5_9.png",
+      "row": 5,
+      "col": 9,
+      "index": 94
+    },
+    {
+      "file": "tiles\\tile_5_10.png",
+      "row": 5,
+      "col": 10,
+      "index": 95
+    },
+    {
+      "file": "tiles\\tile_5_11.png",
+      "row": 5,
+      "col": 11,
+      "index": 96
+    },
+    {
+      "file": "tiles\\tile_5_12.png",
+      "row": 5,
+      "col": 12,
+      "index": 97
+    },
+    {
+      "file": "tiles\\tile_5_13.png",
+      "row": 5,
+      "col": 13,
+      "index": 98
+    },
+    {
+      "file": "tiles\\tile_5_14.png",
+      "row": 5,
+      "col": 14,
+      "index": 99
+    },
+    {
+      "file": "tiles\\tile_5_15.png",
+      "row": 5,
+      "col": 15,
+      "index": 100
+    },
+    {
+      "file": "tiles\\tile_5_16.png",
+      "row": 5,
+      "col": 16,
+      "index": 101
+    },
+    {
+      "file": "tiles\\tile_6_3.png",
+      "row": 6,
+      "col": 3,
+      "index": 105
+    },
+    {
+      "file": "tiles\\tile_6_4.png",
+      "row": 6,
+      "col": 4,
+      "index": 106
+    },
+    {
+      "file": "tiles\\tile_6_7.png",
+      "row": 6,
+      "col": 7,
+      "index": 109
+    },
+    {
+      "file": "tiles\\tile_6_8.png",
+      "row": 6,
+      "col": 8,
+      "index": 110
+    },
+    {
+      "file": "tiles\\tile_6_9.png",
+      "row": 6,
+      "col": 9,
+      "index": 111
+    },
+    {
+      "file": "tiles\\tile_6_10.png",
+      "row": 6,
+      "col": 10,
+      "index": 112
+    },
+    {
+      "file": "tiles\\tile_6_11.png",
+      "row": 6,
+      "col": 11,
+      "index": 113
+    },
+    {
+      "file": "tiles\\tile_6_12.png",
+      "row": 6,
+      "col": 12,
+      "index": 114
+    },
+    {
+      "file": "tiles\\tile_6_13.png",
+      "row": 6,
+      "col": 13,
+      "index": 115
+    },
+    {
+      "file": "tiles\\tile_6_14.png",
+      "row": 6,
+      "col": 14,
+      "index": 116
+    },
+    {
+      "file": "tiles\\tile_6_15.png",
+      "row": 6,
+      "col": 15,
+      "index": 117
+    },
+    {
+      "file": "tiles\\tile_6_16.png",
+      "row": 6,
+      "col": 16,
+      "index": 118
+    },
+    {
+      "file": "tiles\\tile_7_2.png",
+      "row": 7,
+      "col": 2,
+      "index": 121
+    },
+    {
+      "file": "tiles\\tile_7_3.png",
+      "row": 7,
+      "col": 3,
+      "index": 122
+    },
+    {
+      "file": "tiles\\tile_7_4.png",
+      "row": 7,
+      "col": 4,
+      "index": 123
+    },
+    {
+      "file": "tiles\\tile_7_5.png",
+      "row": 7,
+      "col": 5,
+      "index": 124
+    }
+  ],
+  "player_frames": [
+    {
+      "file": "sprites\\player\\player_000.png",
+      "frame": 0
+    },
+    {
+      "file": "sprites\\player\\player_001.png",
+      "frame": 1
+    },
+    {
+      "file": "sprites\\player\\player_002.png",
+      "frame": 2
+    },
+    {
+      "file": "sprites\\player\\player_003.png",
+      "frame": 3
+    },
+    {
+      "file": "sprites\\player\\player_004.png",
+      "frame": 4
+    },
+    {
+      "file": "sprites\\player\\player_005.png",
+      "frame": 5
+    },
+    {
+      "file": "sprites\\player\\player_006.png",
+      "frame": 6
+    },
+    {
+      "file": "sprites\\player\\player_007.png",
+      "frame": 7
+    },
+    {
+      "file": "sprites\\player\\player_008.png",
+      "frame": 8
+    },
+    {
+      "file": "sprites\\player\\player_009.png",
+      "frame": 9
+    },
+    {
+      "file": "sprites\\player\\player_010.png",
+      "frame": 10
+    },
+    {
+      "file": "sprites\\player\\player_011.png",
+      "frame": 11
+    },
+    {
+      "file": "sprites\\player\\player_012.png",
+      "frame": 12
+    },
+    {
+      "file": "sprites\\player\\player_013.png",
+      "frame": 13
+    },
+    {
+      "file": "sprites\\player\\player_014.png",
+      "frame": 14
+    },
+    {
+      "file": "sprites\\player\\player_015.png",
+      "frame": 15
+    },
+    {
+      "file": "sprites\\player\\player_016.png",
+      "frame": 16
+    },
+    {
+      "file": "sprites\\player\\player_017.png",
+      "frame": 17
+    },
+    {
+      "file": "sprites\\player\\player_018.png",
+      "frame": 18
+    },
+    {
+      "file": "sprites\\player\\player_019.png",
+      "frame": 19
+    },
+    {
+      "file": "sprites\\player\\player_020.png",
+      "frame": 20
+    },
+    {
+      "file": "sprites\\player\\player_021.png",
+      "frame": 21
+    },
+    {
+      "file": "sprites\\player\\player_022.png",
+      "frame": 22
+    },
+    {
+      "file": "sprites\\player\\player_023.png",
+      "frame": 23
+    },
+    {
+      "file": "sprites\\player\\player_024.png",
+      "frame": 24
+    },
+    {
+      "file": "sprites\\player\\player_025.png",
+      "frame": 25
+    },
+    {
+      "file": "sprites\\player\\player_026.png",
+      "frame": 26
+    },
+    {
+      "file": "sprites\\player\\player_027.png",
+      "frame": 27
+    },
+    {
+      "file": "sprites\\player\\player_028.png",
+      "frame": 28
+    },
+    {
+      "file": "sprites\\player\\player_029.png",
+      "frame": 29
+    },
+    {
+      "file": "sprites\\player\\player_030.png",
+      "frame": 30
+    },
+    {
+      "file": "sprites\\player\\player_031.png",
+      "frame": 31
+    },
+    {
+      "file": "sprites\\player\\player_032.png",
+      "frame": 32
+    },
+    {
+      "file": "sprites\\player\\player_033.png",
+      "frame": 33
+    },
+    {
+      "file": "sprites\\player\\player_034.png",
+      "frame": 34
+    },
+    {
+      "file": "sprites\\player\\player_035.png",
+      "frame": 35
+    },
+    {
+      "file": "sprites\\player\\player_036.png",
+      "frame": 36
+    },
+    {
+      "file": "sprites\\player\\player_037.png",
+      "frame": 37
+    },
+    {
+      "file": "sprites\\player\\player_038.png",
+      "frame": 38
+    },
+    {
+      "file": "sprites\\player\\player_039.png",
+      "frame": 39
+    },
+    {
+      "file": "sprites\\player\\player_040.png",
+      "frame": 40
+    },
+    {
+      "file": "sprites\\player\\player_041.png",
+      "frame": 41
+    },
+    {
+      "file": "sprites\\player\\player_042.png",
+      "frame": 42
+    },
+    {
+      "file": "sprites\\player\\player_043.png",
+      "frame": 43
+    },
+    {
+      "file": "sprites\\player\\player_044.png",
+      "frame": 44
+    },
+    {
+      "file": "sprites\\player\\player_045.png",
+      "frame": 45
+    },
+    {
+      "file": "sprites\\player\\player_046.png",
+      "frame": 46
+    },
+    {
+      "file": "sprites\\player\\player_047.png",
+      "frame": 47
+    },
+    {
+      "file": "sprites\\player\\player_048.png",
+      "frame": 48
+    },
+    {
+      "file": "sprites\\player\\player_049.png",
+      "frame": 49
+    },
+    {
+      "file": "sprites\\player\\player_050.png",
+      "frame": 50
+    },
+    {
+      "file": "sprites\\player\\player_051.png",
+      "frame": 51
+    },
+    {
+      "file": "sprites\\player\\player_052.png",
+      "frame": 52
+    },
+    {
+      "file": "sprites\\player\\player_053.png",
+      "frame": 53
+    },
+    {
+      "file": "sprites\\player\\player_054.png",
+      "frame": 54
+    },
+    {
+      "file": "sprites\\player\\player_055.png",
+      "frame": 55
+    },
+    {
+      "file": "sprites\\player\\player_056.png",
+      "frame": 56
+    },
+    {
+      "file": "sprites\\player\\player_057.png",
+      "frame": 57
+    },
+    {
+      "file": "sprites\\player\\player_058.png",
+      "frame": 58
+    },
+    {
+      "file": "sprites\\player\\player_059.png",
+      "frame": 59
+    },
+    {
+      "file": "sprites\\player\\player_060.png",
+      "frame": 60
+    },
+    {
+      "file": "sprites\\player\\player_061.png",
+      "frame": 61
+    },
+    {
+      "file": "sprites\\player\\player_062.png",
+      "frame": 62
+    },
+    {
+      "file": "sprites\\player\\player_063.png",
+      "frame": 63
+    },
+    {
+      "file": "sprites\\player\\player_064.png",
+      "frame": 64
+    },
+    {
+      "file": "sprites\\player\\player_065.png",
+      "frame": 65
+    },
+    {
+      "file": "sprites\\player\\player_066.png",
+      "frame": 66
+    },
+    {
+      "file": "sprites\\player\\player_067.png",
+      "frame": 67
+    },
+    {
+      "file": "sprites\\player\\player_068.png",
+      "frame": 68
+    },
+    {
+      "file": "sprites\\player\\player_069.png",
+      "frame": 69
+    },
+    {
+      "file": "sprites\\player\\player_070.png",
+      "frame": 70
+    },
+    {
+      "file": "sprites\\player\\player_071.png",
+      "frame": 71
+    },
+    {
+      "file": "sprites\\player\\player_072.png",
+      "frame": 72
+    },
+    {
+      "file": "sprites\\player\\player_073.png",
+      "frame": 73
+    },
+    {
+      "file": "sprites\\player\\player_074.png",
+      "frame": 74
+    },
+    {
+      "file": "sprites\\player\\player_075.png",
+      "frame": 75
+    },
+    {
+      "file": "sprites\\player\\player_076.png",
+      "frame": 76
+    },
+    {
+      "file": "sprites\\player\\player_077.png",
+      "frame": 77
+    },
+    {
+      "file": "sprites\\player\\player_078.png",
+      "frame": 78
+    },
+    {
+      "file": "sprites\\player\\player_079.png",
+      "frame": 79
+    },
+    {
+      "file": "sprites\\player\\player_080.png",
+      "frame": 80
+    },
+    {
+      "file": "sprites\\player\\player_081.png",
+      "frame": 81
+    },
+    {
+      "file": "sprites\\player\\player_082.png",
+      "frame": 82
+    },
+    {
+      "file": "sprites\\player\\player_083.png",
+      "frame": 83
+    },
+    {
+      "file": "sprites\\player\\player_084.png",
+      "frame": 84
+    },
+    {
+      "file": "sprites\\player\\player_085.png",
+      "frame": 85
+    },
+    {
+      "file": "sprites\\player\\player_086.png",
+      "frame": 86
+    },
+    {
+      "file": "sprites\\player\\player_087.png",
+      "frame": 87
+    },
+    {
+      "file": "sprites\\player\\player_088.png",
+      "frame": 88
+    },
+    {
+      "file": "sprites\\player\\player_089.png",
+      "frame": 89
+    },
+    {
+      "file": "sprites\\player\\player_090.png",
+      "frame": 90
+    },
+    {
+      "file": "sprites\\player\\player_091.png",
+      "frame": 91
+    },
+    {
+      "file": "sprites\\player\\player_092.png",
+      "frame": 92
+    },
+    {
+      "file": "sprites\\player\\player_093.png",
+      "frame": 93
+    },
+    {
+      "file": "sprites\\player\\player_094.png",
+      "frame": 94
+    },
+    {
+      "file": "sprites\\player\\player_095.png",
+      "frame": 95
+    },
+    {
+      "file": "sprites\\player\\player_096.png",
+      "frame": 96
+    },
+    {
+      "file": "sprites\\player\\player_097.png",
+      "frame": 97
+    },
+    {
+      "file": "sprites\\player\\player_098.png",
+      "frame": 98
+    },
+    {
+      "file": "sprites\\player\\player_099.png",
+      "frame": 99
+    },
+    {
+      "file": "sprites\\player\\player_100.png",
+      "frame": 100
+    },
+    {
+      "file": "sprites\\player\\player_101.png",
+      "frame": 101
+    },
+    {
+      "file": "sprites\\player\\player_102.png",
+      "frame": 102
+    },
+    {
+      "file": "sprites\\player\\player_103.png",
+      "frame": 103
+    },
+    {
+      "file": "sprites\\player\\player_104.png",
+      "frame": 104
+    },
+    {
+      "file": "sprites\\player\\player_105.png",
+      "frame": 105
+    },
+    {
+      "file": "sprites\\player\\player_106.png",
+      "frame": 106
+    },
+    {
+      "file": "sprites\\player\\player_107.png",
+      "frame": 107
+    },
+    {
+      "file": "sprites\\player\\player_108.png",
+      "frame": 108
+    },
+    {
+      "file": "sprites\\player\\player_109.png",
+      "frame": 109
+    },
+    {
+      "file": "sprites\\player\\player_110.png",
+      "frame": 110
+    },
+    {
+      "file": "sprites\\player\\player_111.png",
+      "frame": 111
+    },
+    {
+      "file": "sprites\\player\\player_112.png",
+      "frame": 112
+    },
+    {
+      "file": "sprites\\player\\player_113.png",
+      "frame": 113
+    },
+    {
+      "file": "sprites\\player\\player_114.png",
+      "frame": 114
+    },
+    {
+      "file": "sprites\\player\\player_115.png",
+      "frame": 115
+    },
+    {
+      "file": "sprites\\player\\player_116.png",
+      "frame": 116
+    },
+    {
+      "file": "sprites\\player\\player_117.png",
+      "frame": 117
+    },
+    {
+      "file": "sprites\\player\\player_118.png",
+      "frame": 118
+    },
+    {
+      "file": "sprites\\player\\player_119.png",
+      "frame": 119
+    },
+    {
+      "file": "sprites\\player\\player_120.png",
+      "frame": 120
+    },
+    {
+      "file": "sprites\\player\\player_121.png",
+      "frame": 121
+    },
+    {
+      "file": "sprites\\player\\player_122.png",
+      "frame": 122
+    },
+    {
+      "file": "sprites\\player\\player_123.png",
+      "frame": 123
+    },
+    {
+      "file": "sprites\\player\\player_124.png",
+      "frame": 124
+    },
+    {
+      "file": "sprites\\player\\player_125.png",
+      "frame": 125
+    },
+    {
+      "file": "sprites\\player\\player_126.png",
+      "frame": 126
+    },
+    {
+      "file": "sprites\\player\\player_127.png",
+      "frame": 127
+    },
+    {
+      "file": "sprites\\player\\player_128.png",
+      "frame": 128
+    },
+    {
+      "file": "sprites\\player\\player_129.png",
+      "frame": 129
+    },
+    {
+      "file": "sprites\\player\\player_130.png",
+      "frame": 130
+    },
+    {
+      "file": "sprites\\player\\player_131.png",
+      "frame": 131
+    },
+    {
+      "file": "sprites\\player\\player_132.png",
+      "frame": 132
+    },
+    {
+      "file": "sprites\\player\\player_133.png",
+      "frame": 133
+    },
+    {
+      "file": "sprites\\player\\player_134.png",
+      "frame": 134
+    },
+    {
+      "file": "sprites\\player\\player_135.png",
+      "frame": 135
+    },
+    {
+      "file": "sprites\\player\\player_136.png",
+      "frame": 136
+    },
+    {
+      "file": "sprites\\player\\player_137.png",
+      "frame": 137
+    },
+    {
+      "file": "sprites\\player\\player_138.png",
+      "frame": 138
+    },
+    {
+      "file": "sprites\\player\\player_139.png",
+      "frame": 139
+    },
+    {
+      "file": "sprites\\player\\player_140.png",
+      "frame": 140
+    },
+    {
+      "file": "sprites\\player\\player_141.png",
+      "frame": 141
+    },
+    {
+      "file": "sprites\\player\\player_142.png",
+      "frame": 142
+    },
+    {
+      "file": "sprites\\player\\player_143.png",
+      "frame": 143
+    },
+    {
+      "file": "sprites\\player\\player_144.png",
+      "frame": 144
+    },
+    {
+      "file": "sprites\\player\\player_145.png",
+      "frame": 145
+    },
+    {
+      "file": "sprites\\player\\player_146.png",
+      "frame": 146
+    },
+    {
+      "file": "sprites\\player\\player_147.png",
+      "frame": 147
+    },
+    {
+      "file": "sprites\\player\\player_148.png",
+      "frame": 148
+    },
+    {
+      "file": "sprites\\player\\player_149.png",
+      "frame": 149
+    },
+    {
+      "file": "sprites\\player\\player_150.png",
+      "frame": 150
+    },
+    {
+      "file": "sprites\\player\\player_151.png",
+      "frame": 151
+    },
+    {
+      "file": "sprites\\player\\player_152.png",
+      "frame": 152
+    },
+    {
+      "file": "sprites\\player\\player_153.png",
+      "frame": 153
+    },
+    {
+      "file": "sprites\\player\\player_154.png",
+      "frame": 154
+    },
+    {
+      "file": "sprites\\player\\player_155.png",
+      "frame": 155
+    },
+    {
+      "file": "sprites\\player\\player_156.png",
+      "frame": 156
+    },
+    {
+      "file": "sprites\\player\\player_157.png",
+      "frame": 157
+    },
+    {
+      "file": "sprites\\player\\player_158.png",
+      "frame": 158
+    },
+    {
+      "file": "sprites\\player\\player_159.png",
+      "frame": 159
+    },
+    {
+      "file": "sprites\\player\\player_160.png",
+      "frame": 160
+    },
+    {
+      "file": "sprites\\player\\player_161.png",
+      "frame": 161
+    },
+    {
+      "file": "sprites\\player\\player_162.png",
+      "frame": 162
+    },
+    {
+      "file": "sprites\\player\\player_163.png",
+      "frame": 163
+    },
+    {
+      "file": "sprites\\player\\player_164.png",
+      "frame": 164
+    },
+    {
+      "file": "sprites\\player\\player_165.png",
+      "frame": 165
+    },
+    {
+      "file": "sprites\\player\\player_166.png",
+      "frame": 166
+    },
+    {
+      "file": "sprites\\player\\player_167.png",
+      "frame": 167
+    },
+    {
+      "file": "sprites\\player\\player_168.png",
+      "frame": 168
+    },
+    {
+      "file": "sprites\\player\\player_169.png",
+      "frame": 169
+    },
+    {
+      "file": "sprites\\player\\player_170.png",
+      "frame": 170
+    },
+    {
+      "file": "sprites\\player\\player_171.png",
+      "frame": 171
+    },
+    {
+      "file": "sprites\\player\\player_172.png",
+      "frame": 172
+    },
+    {
+      "file": "sprites\\player\\player_173.png",
+      "frame": 173
+    },
+    {
+      "file": "sprites\\player\\player_174.png",
+      "frame": 174
+    },
+    {
+      "file": "sprites\\player\\player_175.png",
+      "frame": 175
+    },
+    {
+      "file": "sprites\\player\\player_176.png",
+      "frame": 176
+    },
+    {
+      "file": "sprites\\player\\player_177.png",
+      "frame": 177
+    },
+    {
+      "file": "sprites\\player\\player_178.png",
+      "frame": 178
+    },
+    {
+      "file": "sprites\\player\\player_179.png",
+      "frame": 179
+    },
+    {
+      "file": "sprites\\player\\player_180.png",
+      "frame": 180
+    },
+    {
+      "file": "sprites\\player\\player_181.png",
+      "frame": 181
+    },
+    {
+      "file": "sprites\\player\\player_182.png",
+      "frame": 182
+    },
+    {
+      "file": "sprites\\player\\player_183.png",
+      "frame": 183
+    },
+    {
+      "file": "sprites\\player\\player_184.png",
+      "frame": 184
+    },
+    {
+      "file": "sprites\\player\\player_185.png",
+      "frame": 185
+    },
+    {
+      "file": "sprites\\player\\player_186.png",
+      "frame": 186
+    },
+    {
+      "file": "sprites\\player\\player_187.png",
+      "frame": 187
+    },
+    {
+      "file": "sprites\\player\\player_188.png",
+      "frame": 188
+    },
+    {
+      "file": "sprites\\player\\player_189.png",
+      "frame": 189
+    },
+    {
+      "file": "sprites\\player\\player_190.png",
+      "frame": 190
+    },
+    {
+      "file": "sprites\\player\\player_191.png",
+      "frame": 191
+    },
+    {
+      "file": "sprites\\player\\player_192.png",
+      "frame": 192
+    },
+    {
+      "file": "sprites\\player\\player_193.png",
+      "frame": 193
+    },
+    {
+      "file": "sprites\\player\\player_194.png",
+      "frame": 194
+    },
+    {
+      "file": "sprites\\player\\player_195.png",
+      "frame": 195
+    },
+    {
+      "file": "sprites\\player\\player_196.png",
+      "frame": 196
+    },
+    {
+      "file": "sprites\\player\\player_197.png",
+      "frame": 197
+    },
+    {
+      "file": "sprites\\player\\player_198.png",
+      "frame": 198
+    },
+    {
+      "file": "sprites\\player\\player_199.png",
+      "frame": 199
+    },
+    {
+      "file": "sprites\\player\\player_200.png",
+      "frame": 200
+    },
+    {
+      "file": "sprites\\player\\player_201.png",
+      "frame": 201
+    },
+    {
+      "file": "sprites\\player\\player_202.png",
+      "frame": 202
+    },
+    {
+      "file": "sprites\\player\\player_203.png",
+      "frame": 203
+    },
+    {
+      "file": "sprites\\player\\player_204.png",
+      "frame": 204
+    },
+    {
+      "file": "sprites\\player\\player_205.png",
+      "frame": 205
+    },
+    {
+      "file": "sprites\\player\\player_206.png",
+      "frame": 206
+    },
+    {
+      "file": "sprites\\player\\player_207.png",
+      "frame": 207
+    },
+    {
+      "file": "sprites\\player\\player_208.png",
+      "frame": 208
+    },
+    {
+      "file": "sprites\\player\\player_209.png",
+      "frame": 209
+    },
+    {
+      "file": "sprites\\player\\player_210.png",
+      "frame": 210
+    },
+    {
+      "file": "sprites\\player\\player_211.png",
+      "frame": 211
+    },
+    {
+      "file": "sprites\\player\\player_212.png",
+      "frame": 212
+    },
+    {
+      "file": "sprites\\player\\player_213.png",
+      "frame": 213
+    },
+    {
+      "file": "sprites\\player\\player_214.png",
+      "frame": 214
+    },
+    {
+      "file": "sprites\\player\\player_215.png",
+      "frame": 215
+    },
+    {
+      "file": "sprites\\player\\player_216.png",
+      "frame": 216
+    },
+    {
+      "file": "sprites\\player\\player_217.png",
+      "frame": 217
+    },
+    {
+      "file": "sprites\\player\\player_218.png",
+      "frame": 218
+    },
+    {
+      "file": "sprites\\player\\player_219.png",
+      "frame": 219
+    },
+    {
+      "file": "sprites\\player\\player_220.png",
+      "frame": 220
+    },
+    {
+      "file": "sprites\\player\\player_221.png",
+      "frame": 221
+    },
+    {
+      "file": "sprites\\player\\player_222.png",
+      "frame": 222
+    },
+    {
+      "file": "sprites\\player\\player_223.png",
+      "frame": 223
+    },
+    {
+      "file": "sprites\\player\\player_224.png",
+      "frame": 224
+    },
+    {
+      "file": "sprites\\player\\player_225.png",
+      "frame": 225
+    },
+    {
+      "file": "sprites\\player\\player_226.png",
+      "frame": 226
+    },
+    {
+      "file": "sprites\\player\\player_227.png",
+      "frame": 227
+    },
+    {
+      "file": "sprites\\player\\player_228.png",
+      "frame": 228
+    },
+    {
+      "file": "sprites\\player\\player_229.png",
+      "frame": 229
+    },
+    {
+      "file": "sprites\\player\\player_230.png",
+      "frame": 230
+    },
+    {
+      "file": "sprites\\player\\player_231.png",
+      "frame": 231
+    },
+    {
+      "file": "sprites\\player\\player_232.png",
+      "frame": 232
+    },
+    {
+      "file": "sprites\\player\\player_233.png",
+      "frame": 233
+    },
+    {
+      "file": "sprites\\player\\player_234.png",
+      "frame": 234
+    },
+    {
+      "file": "sprites\\player\\player_235.png",
+      "frame": 235
+    },
+    {
+      "file": "sprites\\player\\player_236.png",
+      "frame": 236
+    },
+    {
+      "file": "sprites\\player\\player_237.png",
+      "frame": 237
+    },
+    {
+      "file": "sprites\\player\\player_238.png",
+      "frame": 238
+    },
+    {
+      "file": "sprites\\player\\player_239.png",
+      "frame": 239
+    },
+    {
+      "file": "sprites\\player\\player_240.png",
+      "frame": 240
+    },
+    {
+      "file": "sprites\\player\\player_241.png",
+      "frame": 241
+    },
+    {
+      "file": "sprites\\player\\player_242.png",
+      "frame": 242
+    },
+    {
+      "file": "sprites\\player\\player_243.png",
+      "frame": 243
+    },
+    {
+      "file": "sprites\\player\\player_244.png",
+      "frame": 244
+    },
+    {
+      "file": "sprites\\player\\player_245.png",
+      "frame": 245
+    },
+    {
+      "file": "sprites\\player\\player_246.png",
+      "frame": 246
+    },
+    {
+      "file": "sprites\\player\\player_247.png",
+      "frame": 247
+    },
+    {
+      "file": "sprites\\player\\player_248.png",
+      "frame": 248
+    },
+    {
+      "file": "sprites\\player\\player_249.png",
+      "frame": 249
+    },
+    {
+      "file": "sprites\\player\\player_250.png",
+      "frame": 250
+    },
+    {
+      "file": "sprites\\player\\player_251.png",
+      "frame": 251
+    },
+    {
+      "file": "sprites\\player\\player_252.png",
+      "frame": 252
+    },
+    {
+      "file": "sprites\\player\\player_253.png",
+      "frame": 253
+    },
+    {
+      "file": "sprites\\player\\player_254.png",
+      "frame": 254
+    },
+    {
+      "file": "sprites\\player\\player_255.png",
+      "frame": 255
+    },
+    {
+      "file": "sprites\\player\\player_256.png",
+      "frame": 256
+    },
+    {
+      "file": "sprites\\player\\player_257.png",
+      "frame": 257
+    },
+    {
+      "file": "sprites\\player\\player_258.png",
+      "frame": 258
+    },
+    {
+      "file": "sprites\\player\\player_259.png",
+      "frame": 259
+    },
+    {
+      "file": "sprites\\player\\player_260.png",
+      "frame": 260
+    },
+    {
+      "file": "sprites\\player\\player_261.png",
+      "frame": 261
+    },
+    {
+      "file": "sprites\\player\\player_262.png",
+      "frame": 262
+    },
+    {
+      "file": "sprites\\player\\player_263.png",
+      "frame": 263
+    },
+    {
+      "file": "sprites\\player\\player_264.png",
+      "frame": 264
+    },
+    {
+      "file": "sprites\\player\\player_265.png",
+      "frame": 265
+    },
+    {
+      "file": "sprites\\player\\player_266.png",
+      "frame": 266
+    },
+    {
+      "file": "sprites\\player\\player_267.png",
+      "frame": 267
+    },
+    {
+      "file": "sprites\\player\\player_268.png",
+      "frame": 268
+    },
+    {
+      "file": "sprites\\player\\player_269.png",
+      "frame": 269
+    },
+    {
+      "file": "sprites\\player\\player_270.png",
+      "frame": 270
+    },
+    {
+      "file": "sprites\\player\\player_271.png",
+      "frame": 271
+    },
+    {
+      "file": "sprites\\player\\player_272.png",
+      "frame": 272
+    },
+    {
+      "file": "sprites\\player\\player_273.png",
+      "frame": 273
+    },
+    {
+      "file": "sprites\\player\\player_274.png",
+      "frame": 274
+    },
+    {
+      "file": "sprites\\player\\player_275.png",
+      "frame": 275
+    },
+    {
+      "file": "sprites\\player\\player_322.png",
+      "frame": 322
+    },
+    {
+      "file": "sprites\\player\\player_323.png",
+      "frame": 323
+    },
+    {
+      "file": "sprites\\player\\player_324.png",
+      "frame": 324
+    },
+    {
+      "file": "sprites\\player\\player_325.png",
+      "frame": 325
+    },
+    {
+      "file": "sprites\\player\\player_326.png",
+      "frame": 326
+    },
+    {
+      "file": "sprites\\player\\player_327.png",
+      "frame": 327
+    },
+    {
+      "file": "sprites\\player\\player_328.png",
+      "frame": 328
+    },
+    {
+      "file": "sprites\\player\\player_329.png",
+      "frame": 329
+    }
+  ],
+  "bosses_folder": "bosses\\raw",
+  "attribution": [
+    {
+      "asset": "A platformer in the forest",
+      "author": "Buch",
+      "license": "CC0",
+      "source": "https://opengameart.org/content/a-platformer-in-the-forest"
+    },
+    {
+      "asset": "Bosses and monsters spritesheets (Ars Notoria)",
+      "author": "Balmer/Redshrike",
+      "license": "CC-BY 3.0 (check for CC-BY-SA items)",
+      "source": "https://opengameart.org/content/bosses-and-monsters-spritesheets-ars-notoria"
+    }
+  ]
+}
