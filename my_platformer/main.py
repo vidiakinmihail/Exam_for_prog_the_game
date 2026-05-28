@@ -5,7 +5,7 @@ from __future__ import annotations
 import pygame
 
 from .camera import Camera
-from .config import FPS, SCREEN_HEIGHT, SCREEN_WIDTH, WINDOW_TITLE
+from .config import FPS, SCREEN_HEIGHT, SCREEN_WIDTH, START_LEVEL, WINDOW_TITLE
 from .world import World
 
 
@@ -17,9 +17,11 @@ class Game:
         pygame.display.set_caption(WINDOW_TITLE)
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
-        self.world = World()
+        self.current_level = START_LEVEL
+        self.world = World(self.current_level)
         self.camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT, self.world.world_width, self.world.world_height)
         self.running = True
+        self.completion_timer = 0
 
     def handle_events(self) -> None:
         """Обрабатывает события окна и клавиатуры."""
@@ -34,10 +36,24 @@ class Game:
 
     def update(self) -> None:
         """Обновляет модель мира, если игра ещё не завершена."""
+        if self.completion_timer > 0:
+            self.completion_timer -= 1
+            if self.completion_timer == 0:
+                self.running = False
+            return
+
         keys = pygame.key.get_pressed()
         move_left = keys[pygame.K_a] or keys[pygame.K_LEFT]
         move_right = keys[pygame.K_d] or keys[pygame.K_RIGHT]
         self.world.update(move_left, move_right)
+
+        if self.world.level_complete and not self.world.game_completed:
+            self.current_level += 1
+            self.world.next_level()
+            self.camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT, self.world.world_width, self.world.world_height)
+        elif self.world.game_completed:
+            self.completion_timer = FPS * 2
+
         self.camera.update(self.world.player.rect)
 
     def draw(self) -> None:
