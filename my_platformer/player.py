@@ -18,6 +18,9 @@ from .config import (
 class Player:
     """Зелёный квадрат, которым управляет игрок."""
 
+    JUMP_BUFFER_FRAMES = 6
+    COYOTE_FRAMES = 6
+
     def __init__(self, x: int, y: int) -> None:
         self.rect = pygame.Rect(x, y, PLAYER_SIZE, PLAYER_SIZE)
         self.velocity_x = 0
@@ -26,12 +29,12 @@ class Player:
         self.lives = PLAYER_MAX_LIVES
         self.knockback_frames = 0
         self.knockback_direction = 0
+        self.jump_buffer_frames = 0
+        self.coyote_frames = 0
 
     def jump(self) -> None:
-        """Запускает прыжок, если игрок стоит на земле."""
-        if self.on_ground and self.knockback_frames == 0:
-            self.velocity_y = JUMP_POWER
-            self.on_ground = False
+        """Запоминает нажатие прыжка на несколько кадров."""
+        self.jump_buffer_frames = self.JUMP_BUFFER_FRAMES
 
     def take_damage(self, knockback_direction: int) -> None:
         """Снимает одну жизнь и отбрасывает игрока от врага."""
@@ -63,6 +66,15 @@ class Player:
                     self.rect.top = platform.rect.bottom
                     self.velocity_y = 0
 
+    def _try_jump(self) -> None:
+        """Выполняет прыжок, если был буфер нажатия и игрок стоит на земле или в coyote time."""
+        can_jump = (self.on_ground or self.coyote_frames > 0) and self.knockback_frames == 0
+        if self.jump_buffer_frames > 0 and can_jump:
+            self.velocity_y = JUMP_POWER
+            self.on_ground = False
+            self.jump_buffer_frames = 0
+            self.coyote_frames = 0
+
     def update(self, platforms: list[pygame.sprite.Sprite], move_left: bool, move_right: bool) -> None:
         """Обновляет физику игрока и обрабатывает столкновения с платформами."""
         if self.knockback_frames > 0:
@@ -80,9 +92,19 @@ class Player:
         self.rect.x += self.velocity_x
         self._apply_horizontal_collision(platforms)
 
+        if self.on_ground:
+            self.coyote_frames = self.COYOTE_FRAMES
+        elif self.coyote_frames > 0:
+            self.coyote_frames -= 1
+
+        self._try_jump()
+
         self.velocity_y += GRAVITY
         self.rect.y += int(self.velocity_y)
         self._apply_vertical_collision(platforms)
+
+        if self.jump_buffer_frames > 0:
+            self.jump_buffer_frames -= 1
 
     def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
         """Рисует игрока с учётом камеры."""
