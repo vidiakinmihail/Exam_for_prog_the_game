@@ -73,7 +73,15 @@ class Game:
 
 def main() -> None:
     """Стартует игру."""
-    Game().run()
+    game = Game()
+    from .menu import Menu
+
+    start = Menu.show(game)
+    if start:
+        game.run()
+    else:
+        # Пользователь закрыл меню — корректно завершить Pygame
+        pygame.quit()
 
 
 if __name__ == "__main__":
