@@ -58,6 +58,7 @@ class Game:
         if self.completion_timer > 0:
             self.completion_timer -= 1
             if self.completion_timer == 0:
+                self.return_to_menu = True
                 self.running = False
             return
         if self.paused:
@@ -73,6 +74,7 @@ class Game:
             self.world.next_level()
             self.camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT, self.world.world_width, self.world.world_height)
         elif self.world.game_completed:
+            self.return_to_menu = True
             self.completion_timer = FPS * 2
 
         self.camera.update(self.world.player.rect)

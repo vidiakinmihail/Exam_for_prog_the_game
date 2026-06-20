@@ -13,6 +13,7 @@ from .config import (
     PLAYER_MAX_LIVES,
     PLAYER_SIZE,
 )
+from .sprites import get_character_row
 
 
 class Player:
@@ -31,6 +32,12 @@ class Player:
         self.knockback_direction = 0
         self.jump_buffer_frames = 0
         self.coyote_frames = 0
+        self.sprite_frames = get_character_row(1, (64, 64))
+        self.idle_frame = self.sprite_frames[0]
+        self.walk_frames = self.sprite_frames[1:6] if len(self.sprite_frames) >= 6 else self.sprite_frames
+        self.jump_frame = self.sprite_frames[6] if len(self.sprite_frames) > 6 else self.sprite_frames[-1]
+        self.animation_tick = 0
+        self.facing_right = True
 
     def jump(self) -> None:
         """Запоминает нажатие прыжка на несколько кадров."""
@@ -77,9 +84,12 @@ class Player:
 
     def update(self, platforms: list[pygame.sprite.Sprite], move_left: bool, move_right: bool) -> None:
         """Обновляет физику игрока и обрабатывает столкновения с платформами."""
+        moving = False
         if self.knockback_frames > 0:
             self.velocity_x = self.knockback_direction * PLAYER_KNOCKBACK_SPEED
             self.knockback_frames -= 1
+            moving = True
+            self.facing_right = self.knockback_direction >= 0
         else:
             self.velocity_x = 0
             if move_left:
@@ -88,6 +98,11 @@ class Player:
                 self.velocity_x += 1
             self.velocity_x *= 0 if (move_left and move_right) else 1
             self.velocity_x *= 4
+            moving = self.velocity_x != 0
+            if move_left and not move_right:
+                self.facing_right = False
+            elif move_right and not move_left:
+                self.facing_right = True
 
         self.rect.x += self.velocity_x
         self._apply_horizontal_collision(platforms)
@@ -103,11 +118,26 @@ class Player:
         self.rect.y += int(self.velocity_y)
         self._apply_vertical_collision(platforms)
 
+        if moving or not self.on_ground:
+            self.animation_tick += 1
+
         if self.jump_buffer_frames > 0:
             self.jump_buffer_frames -= 1
 
     def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
         """Рисует игрока с учётом камеры."""
         rect = camera.apply(self.rect)
-        pygame.draw.rect(surface, PLAYER_COLOR, rect)
-        pygame.draw.rect(surface, (20, 90, 35), rect, 2)
+        if not self.on_ground:
+            frame = self.jump_frame
+        else:
+            # временно убираем ходовую анимацию, чтобы убрать дрожание спрайта
+            frame = self.idle_frame
+
+        if not self.facing_right:
+            frame = pygame.transform.flip(frame, True, False)
+
+        frame_rect = frame.get_rect(midbottom=(rect.centerx, rect.bottom))
+        shadow = pygame.Surface((frame_rect.width, 12), pygame.SRCALPHA)
+        pygame.draw.ellipse(shadow, (0, 0, 0, 70), shadow.get_rect())
+        surface.blit(shadow, (frame_rect.x, frame_rect.bottom - 8))
+        surface.blit(frame, frame_rect)

@@ -30,8 +30,14 @@ class Item(pygame.sprite.Sprite):
         if not self.alive():
             return
         center = (self.center_x - camera.camera.x, self.center_y - camera.camera.y)
-        pygame.draw.circle(surface, ITEM_COLOR, center, self.radius)
+        glow = pygame.Surface((self.radius * 4, self.radius * 4), pygame.SRCALPHA)
+        pygame.draw.circle(glow, (255, 220, 80, 45), (glow.get_width() // 2, glow.get_height() // 2), self.radius + 4)
+        surface.blit(glow, (center[0] - glow.get_width() // 2, center[1] - glow.get_height() // 2))
+        pygame.draw.circle(surface, (255, 245, 180), center, self.radius)
+        pygame.draw.circle(surface, ITEM_COLOR, center, self.radius - 2)
         pygame.draw.circle(surface, (120, 95, 20), center, self.radius, 2)
+        pygame.draw.line(surface, (255, 255, 255), (center[0] - 4, center[1] - 5), (center[0], center[1] - 9), 2)
+        pygame.draw.line(surface, (255, 255, 255), (center[0] + 2, center[1] - 2), (center[0] + 7, center[1] - 7), 2)
 
 
 class Door(pygame.sprite.Sprite):
@@ -44,5 +50,13 @@ class Door(pygame.sprite.Sprite):
     def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
         """Рисует дверь с учётом камеры."""
         rect = camera.apply(self.rect)
-        pygame.draw.rect(surface, DOOR_COLOR, rect)
-        pygame.draw.rect(surface, (20, 35, 110), rect, 3)
+        glow = pygame.Surface((rect.width + 30, rect.height + 30), pygame.SRCALPHA)
+        pygame.draw.ellipse(glow, (110, 160, 255, 50), (8, 8, rect.width + 12, rect.height + 12))
+        surface.blit(glow, (rect.x - 15, rect.y - 15))
+
+        body = rect.inflate(-2, -2)
+        pygame.draw.rect(surface, (195, 225, 255), body, border_radius=6)
+        inner = body.inflate(-8, -10)
+        pygame.draw.rect(surface, DOOR_COLOR, inner, border_radius=5)
+        pygame.draw.rect(surface, (20, 35, 110), body, 3, border_radius=6)
+        pygame.draw.rect(surface, (250, 250, 255), (inner.x + 5, inner.y + 5, 5, inner.height - 10), border_radius=3)

@@ -48,7 +48,6 @@ def draw_hearts(
     for index in range(max_lives):
         center_x = x + index * spacing + radius
         center_y = y + radius
-        outline_rect = pygame.Rect(center_x - radius, center_y - radius, radius * 2, radius * 2)
         fill_color = HEART_COLOR if index < lives else (90, 30, 30)
         pygame.draw.circle(surface, fill_color, (center_x, center_y), radius)
         pygame.draw.circle(surface, HEART_OUTLINE_COLOR, (center_x, center_y), radius, 2)
