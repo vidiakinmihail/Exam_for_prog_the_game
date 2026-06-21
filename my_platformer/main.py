@@ -7,7 +7,7 @@ import pygame
 from .camera import Camera
 from .config import FPS, SCREEN_HEIGHT, SCREEN_WIDTH, START_LEVEL, WINDOW_TITLE, TEXT_COLOR
 from .world import World
-from .pause_menu import PauseMenu
+from .pause_menu import PauseMenu, GameOverMenu
 
 
 class Game:
@@ -25,6 +25,7 @@ class Game:
         self.completion_timer = 0
         self.paused = False
         self.pause_menu = PauseMenu()
+        self.game_over_menu = GameOverMenu()
         self.return_to_menu = False
 
     def handle_events(self) -> None:
@@ -39,19 +40,22 @@ class Game:
                     # Toggle pause
                     self.paused = not self.paused
                 elif event.key == pygame.K_SPACE:
-                    if not self.paused:
+                    if not self.paused and not self.world.game_over:
                         self.world.player.jump()
-            elif self.paused and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                action = self.pause_menu.handle_mouse(event.pos)
-                if action == "resume":
-                    self.paused = False
-                elif action == "main_menu":
-                    # request return to main menu
-                    self.return_to_menu = True
-                    self.running = False
-                elif action == "settings":
-                    # open settings (blocking) and stay paused afterwards
-                    self.pause_menu.show_settings(self)
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if self.world.game_over:
+                    if self.game_over_menu.handle_mouse(event.pos) == "main_menu":
+                        self.return_to_menu = True
+                        self.running = False
+                elif self.paused:
+                    action = self.pause_menu.handle_mouse(event.pos)
+                    if action == "resume":
+                        self.paused = False
+                    elif action == "main_menu":
+                        self.return_to_menu = True
+                        self.running = False
+                    elif action == "settings":
+                        self.pause_menu.show_settings(self)
 
     def update(self) -> None:
         """Обновляет модель мира, если игра ещё не завершена."""
@@ -84,6 +88,8 @@ class Game:
         self.world.draw(self.screen, self.camera)
         if self.paused:
             self.pause_menu.render(self.screen)
+        elif self.world.game_over:
+            self.game_over_menu.render(self.screen)
         pygame.display.flip()
 
     def run(self) -> str:

@@ -12,6 +12,7 @@ from .config import (
     ENEMY_PATROL_SPEED,
     ENEMY_RETREAT_SPEED,
     ENEMY_SIZE,
+    ENEMY_SPRITE_SIZE,
     ENEMY_VERTICAL_TOLERANCE,
     GRAVITY,
 )
@@ -36,7 +37,7 @@ class Enemy(pygame.sprite.Sprite):
         self.retreat_direction = -1
         self.patrol_left = patrol_left
         self.patrol_right = patrol_right
-        self.sprite_frames = get_character_row(skin_row, (52, 52))
+        self.sprite_frames = get_character_row(skin_row, ENEMY_SPRITE_SIZE)
         if skin_row == 3:
             self.sprite_frames = self.sprite_frames[:4]
         self.animation_tick = 0

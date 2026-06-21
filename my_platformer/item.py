@@ -1,21 +1,32 @@
-"""Собираемые предметы и дверь финиша."""
+"""Собираемые предметы и анимированный портал финиша."""
 
 from __future__ import annotations
 
 import pygame
 
-from .config import DOOR_COLOR, DOOR_SIZE, ITEM_COLOR, ITEM_RADIUS
+from .config import PORTAL_SIZE
+from .sprites import get_coin_frames, get_portal_frames
 
 
 class Item(pygame.sprite.Sprite):
-    """Жёлтый круг-собираемый предмет."""
+    """Анимированная монета-собираемый предмет."""
 
     def __init__(self, x: int, y: int) -> None:
         super().__init__()
+        self.frames = get_coin_frames()
         self.center_x = x
         self.center_y = y
-        self.radius = ITEM_RADIUS
-        self.rect = pygame.Rect(x - self.radius, y - self.radius, self.radius * 2, self.radius * 2)
+        self.radius = max(self.frames[0].get_width(), self.frames[0].get_height()) // 2
+        self.rect = pygame.Rect(
+            x - self.radius,
+            y - self.radius,
+            self.radius * 2,
+            self.radius * 2,
+        )
+        self.animation_tick = 0
+
+    def update(self) -> None:
+        self.animation_tick += 1
 
     def collides_with(self, player_rect: pygame.Rect) -> bool:
         """Проверяет пересечение круга с прямоугольником игрока."""
@@ -26,37 +37,37 @@ class Item(pygame.sprite.Sprite):
         return dx * dx + dy * dy <= self.radius * self.radius
 
     def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
-        """Рисует предмет с учётом камеры."""
+        """Рисует монету с учётом камеры."""
         if not self.alive():
             return
-        center = (self.center_x - camera.camera.x, self.center_y - camera.camera.y)
-        glow = pygame.Surface((self.radius * 4, self.radius * 4), pygame.SRCALPHA)
-        pygame.draw.circle(glow, (255, 220, 80, 45), (glow.get_width() // 2, glow.get_height() // 2), self.radius + 4)
-        surface.blit(glow, (center[0] - glow.get_width() // 2, center[1] - glow.get_height() // 2))
-        pygame.draw.circle(surface, (255, 245, 180), center, self.radius)
-        pygame.draw.circle(surface, ITEM_COLOR, center, self.radius - 2)
-        pygame.draw.circle(surface, (120, 95, 20), center, self.radius, 2)
-        pygame.draw.line(surface, (255, 255, 255), (center[0] - 4, center[1] - 5), (center[0], center[1] - 9), 2)
-        pygame.draw.line(surface, (255, 255, 255), (center[0] + 2, center[1] - 2), (center[0] + 7, center[1] - 7), 2)
+        frame_index = (self.animation_tick // 6) % len(self.frames)
+        frame = self.frames[frame_index]
+        screen_x = self.center_x - camera.camera.x
+        screen_y = self.center_y - camera.camera.y
+        frame_rect = frame.get_rect(center=(screen_x, screen_y))
+        surface.blit(frame, frame_rect)
 
 
-class Door(pygame.sprite.Sprite):
-    """Синяя дверь финиша, которая появляется после сбора всех предметов."""
+class Portal(pygame.sprite.Sprite):
+    """Анимированный портал, появляющийся после сбора всех предметов."""
 
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int, level_num: int) -> None:
         super().__init__()
-        self.rect = pygame.Rect(x, y, DOOR_SIZE[0], DOOR_SIZE[1])
+        self.level_num = level_num
+        self.frames = get_portal_frames(level_num, PORTAL_SIZE)
+        self.rect = pygame.Rect(x, y, PORTAL_SIZE[0], PORTAL_SIZE[1])
+        self.animation_tick = 0
+
+    def update(self) -> None:
+        self.animation_tick += 1
 
     def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
-        """Рисует дверь с учётом камеры."""
+        """Рисует текущий кадр портала с учётом камеры."""
         rect = camera.apply(self.rect)
-        glow = pygame.Surface((rect.width + 30, rect.height + 30), pygame.SRCALPHA)
-        pygame.draw.ellipse(glow, (110, 160, 255, 50), (8, 8, rect.width + 12, rect.height + 12))
-        surface.blit(glow, (rect.x - 15, rect.y - 15))
+        frame_index = (self.animation_tick // 4) % len(self.frames)
+        frame = self.frames[frame_index]
+        frame_rect = frame.get_rect(midbottom=(rect.centerx, rect.bottom))
+        surface.blit(frame, frame_rect)
 
-        body = rect.inflate(-2, -2)
-        pygame.draw.rect(surface, (195, 225, 255), body, border_radius=6)
-        inner = body.inflate(-8, -10)
-        pygame.draw.rect(surface, DOOR_COLOR, inner, border_radius=5)
-        pygame.draw.rect(surface, (20, 35, 110), body, 3, border_radius=6)
-        pygame.draw.rect(surface, (250, 250, 255), (inner.x + 5, inner.y + 5, 5, inner.height - 10), border_radius=3)
+
+Door = Portal

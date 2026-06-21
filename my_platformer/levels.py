@@ -17,7 +17,7 @@ LEVELS = {
         "enemies": [
             {"x": 400, "y": 520, "patrol_left": 300, "patrol_right": 500},
         ],
-        "door_spawn_platform": {"platform_index": 5, "offset_x": 1270, "offset_y": 90},
+        "door_spawn_platform": {"platform_index": 5, "offset_x": 1270, "offset_y": 70},
         "items_to_collect": 2,
     },
     2: {
@@ -42,7 +42,7 @@ LEVELS = {
             {"x": 350, "y": 520, "patrol_left": 250, "patrol_right": 450},
             {"x": 500, "y": 360, "patrol_left": 450, "patrol_right": 650},
         ],
-        "door_spawn_platform": {"platform_index": 8, "offset_x": 1290, "offset_y": 50},
+        "door_spawn_platform": {"platform_index": 8, "offset_x": 1290, "offset_y": 30},
         "items_to_collect": 4,
     },
     3: {
@@ -72,7 +72,7 @@ LEVELS = {
             {"x": 450, "y": 380, "patrol_left": 350, "patrol_right": 550},
             {"x": 600, "y": 300, "patrol_left": 550, "patrol_right": 700},
         ],
-        "door_spawn_platform": {"platform_index": 10, "offset_x": 1470, "offset_y": 20},
+        "door_spawn_platform": {"platform_index": 10, "offset_x": 1470, "offset_y": 0},
         "items_to_collect": 6,
     },
 }

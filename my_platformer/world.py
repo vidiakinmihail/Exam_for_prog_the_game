@@ -1,4 +1,4 @@
-"""Мир игры: платформы, предметы, враги, дверь и переходы между уровнями."""
+"""Мир игры: платформы, предметы, враги, портал и переходы между уровнями."""
 
 from __future__ import annotations
 
@@ -6,12 +6,14 @@ import random
 
 import pygame
 
-from .config import BACKGROUND_COLOR, PLAYER_MAX_LIVES, PLAYER_START_POS, PLATFORM_COLOR, SCREEN_HEIGHT, SCREEN_WIDTH, START_LEVEL, WORLD_WIDTH
+from .config import PLAYER_MAX_LIVES, PLAYER_START_POS, SCREEN_HEIGHT, SCREEN_WIDTH, START_LEVEL, WORLD_WIDTH
 from .enemy import Enemy
-from .item import Door, Item
+from .item import Portal, Item
 from .levels import LEVELS
 from .player import Player
-from .utils import draw_hearts, draw_text
+from .sprites import PARALLAX_FACTORS, get_decoration_sprites, get_parallax_layers
+from .tiles import draw_tiled_platform
+from .utils import draw_hud_panel, draw_text
 
 
 class Platform(pygame.sprite.Sprite):
@@ -22,17 +24,13 @@ class Platform(pygame.sprite.Sprite):
         self.rect = pygame.Rect(x, y, width, height)
 
     def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
-        rect = camera.apply(self.rect)
-        shadow_rect = rect.move(4, 5)
-        pygame.draw.rect(surface, (18, 16, 24), shadow_rect, border_radius=6)
-        pygame.draw.rect(surface, PLATFORM_COLOR, rect, border_radius=6)
-        top_band = pygame.Rect(rect.x, rect.y, rect.width, max(4, rect.height // 4))
-        pygame.draw.rect(surface, (166, 112, 62), top_band, border_radius=6)
-        pygame.draw.rect(surface, (68, 43, 23), rect, 2, border_radius=6)
+        draw_tiled_platform(surface, camera.apply(self.rect))
 
 
 class World:
     """Хранит все игровые объекты и данные текущего уровня."""
+
+    GROUND_Y = 550
 
     def __init__(self, level_num: int = START_LEVEL, player_lives: int = PLAYER_MAX_LIVES) -> None:
         self.player = Player(*PLAYER_START_POS)
@@ -45,7 +43,7 @@ class World:
         self.items = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.doors = pygame.sprite.Group()
-        self.door: Door | None = None
+        self.door: Portal | None = None
         self.enemy: Enemy | None = None
 
         self.level_num = level_num
@@ -56,49 +54,56 @@ class World:
         self.game_completed = False
         self.win = False
         self.door_spawn_position = (0, 0)
-        self._sky_stars: list[tuple[int, int, int]] = []
-        self._clouds: list[tuple[int, int, int, int]] = []
-        self._hills_far: list[tuple[int, int, int]] = []
-        self._hills_near: list[tuple[int, int, int]] = []
-        self._sky_gradient: pygame.Surface | None = None
-        self._background_tick = 0
+        self._parallax_layers = get_parallax_layers()
+        self._decorations: list[tuple[int, int, str, int, float]] = []
 
         self._load_level(level_num, keep_lives=player_lives)
 
     def _build_background(self) -> None:
-        """Создаёт простой процедурный фон для текущего уровня."""
+        """Расставляет деревья, ивы, кусты и траву на уровне."""
         rng = random.Random(self.level_num * 173)
-        self._sky_stars = [
-            (rng.randrange(0, self.world_width), rng.randrange(10, 220), rng.randrange(1, 3))
-            for _ in range(30)
-        ]
-        self._clouds = [
-            (rng.randrange(0, self.world_width), rng.randrange(20, 180), rng.randrange(80, 180), rng.randrange(24, 46))
-            for _ in range(8)
-        ]
-        self._hills_far = [
-            (rng.randrange(0, self.world_width), rng.randrange(380, 470), rng.randrange(100, 180))
-            for _ in range(10)
-        ]
-        self._hills_near = [
-            (rng.randrange(0, self.world_width), rng.randrange(430, 520), rng.randrange(120, 220))
-            for _ in range(10)
-        ]
-        self._build_sky_gradient()
+        self._decorations = []
 
-    def _build_sky_gradient(self) -> None:
-        """Один раз рисует градиент неба — так фон быстрее и плавнее."""
-        height = SCREEN_HEIGHT
-        width = SCREEN_WIDTH
-        self._sky_gradient = pygame.Surface((width, height))
-        for y in range(height):
-            t = y / max(1, height - 1)
-            color = (
-                int(20 + 12 * t),
-                int(26 + 18 * t),
-                int(44 + 28 * t),
+        for _ in range(6):
+            kind = rng.choice(("tree", "tree", "willow"))
+            variants = get_decoration_sprites(kind)
+            self._decorations.append(
+                (
+                    rng.randrange(80, self.world_width - 80),
+                    self.GROUND_Y,
+                    kind,
+                    rng.randrange(len(variants)),
+                    rng.uniform(0.10, 0.18),
+                )
             )
-            pygame.draw.line(self._sky_gradient, color, (0, y), (width, y))
+
+        for _ in range(10):
+            kind = rng.choice(("bush", "grass", "grass"))
+            variants = get_decoration_sprites(kind)
+            self._decorations.append(
+                (
+                    rng.randrange(0, self.world_width),
+                    self.GROUND_Y,
+                    kind,
+                    rng.randrange(len(variants)),
+                    rng.uniform(0.22, 0.34),
+                )
+            )
+
+        for platform in self.platforms:
+            if platform.rect.height > 24:
+                continue
+            for _ in range(rng.randint(1, 2)):
+                variants = get_decoration_sprites("grass")
+                self._decorations.append(
+                    (
+                        rng.randrange(platform.rect.left + 8, max(platform.rect.left + 12, platform.rect.right - 8)),
+                        platform.rect.top,
+                        "grass",
+                        rng.randrange(len(variants)),
+                        1.0,
+                    )
+                )
 
     def _reset_player_for_level(self, keep_lives: int | None = None) -> None:
         self.player.rect.topleft = PLAYER_START_POS
@@ -146,9 +151,9 @@ class World:
         self._reset_player_for_level(keep_lives)
 
     def _spawn_door_if_needed(self) -> None:
-        """Создаёт дверь после сбора всех предметов."""
+        """Создаёт портал после сбора всех предметов."""
         if self.score == self.total_items and self.door is None:
-            self.door = Door(*self.door_spawn_position)
+            self.door = Portal(*self.door_spawn_position, self.level_num)
             self.doors.add(self.door)
 
     def _collect_items(self) -> None:
@@ -181,12 +186,16 @@ class World:
         if self.game_over or self.level_complete or self.game_completed:
             return
 
-        self._background_tick += 1
-
         platforms = self.platforms.sprites()
         self.player.update(platforms, move_left, move_right)
         for enemy in self.enemies:
             enemy.update(self.player, platforms)
+
+        for item in self.items:
+            item.update()
+
+        for door in self.doors:
+            door.update()
 
         self._collect_items()
         self._spawn_door_if_needed()
@@ -197,11 +206,13 @@ class World:
 
     def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
         """Рисует уровень и HUD."""
-        surface.fill((16, 20, 34))
         self._draw_background(surface, camera)
+        self._draw_decorations(surface, camera, kinds=("tree", "willow"))
 
         for platform in self.platforms:
             platform.draw(surface, camera)
+
+        self._draw_decorations(surface, camera, kinds=("bush", "grass"))
 
         for item in self.items:
             item.draw(surface, camera)
@@ -214,73 +225,62 @@ class World:
 
         self.player.draw(surface, camera)
 
-        hud = pygame.Surface((240, 110), pygame.SRCALPHA)
-        pygame.draw.rect(hud, (10, 14, 24, 170), hud.get_rect(), border_radius=14)
-        pygame.draw.rect(hud, (120, 150, 210, 90), hud.get_rect(), 2, border_radius=14)
-        surface.blit(hud, (6, 6))
+        draw_hud_panel(
+            surface,
+            lives=self.player.lives,
+            max_lives=PLAYER_MAX_LIVES,
+            level=self.level_num,
+            max_level=self.max_level,
+            score=self.score,
+            total_items=self.total_items,
+        )
 
-        draw_hearts(surface, self.player.lives, PLAYER_MAX_LIVES)
-        draw_text(surface, f"Level: {self.level_num}/{self.max_level}", 12, 42, 24)
-        draw_text(surface, f"Score: {self.score}/{self.total_items}", 12, 72, 24)
-
-        if self.game_over:
-            draw_text(surface, "GAME OVER", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 64, center=True)
-        elif self.game_completed:
-            draw_text(surface, "GAME COMPLETED!", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 64, center=True)
+        if self.game_completed:
+            draw_text(surface, "Игра пройдена!", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 64, center=True)
         elif self.level_complete:
-            draw_text(surface, "LEVEL COMPLETE", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 56, center=True)
+            draw_text(surface, "Уровень пройден!", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2, 56, center=True)
+
+    def _draw_parallax_layer(
+        self,
+        surface: pygame.Surface,
+        layer: pygame.Surface,
+        cam_x: float,
+        factor: float,
+    ) -> None:
+        """Рисует один слой параллакса с горизонтальным тайлингом."""
+        width = surface.get_width()
+        layer_width = layer.get_width()
+        offset = int(cam_x * factor) % layer_width
+        x = -offset
+        while x < width:
+            surface.blit(layer, (x, 0))
+            x += layer_width
 
     def _draw_background(self, surface: pygame.Surface, camera: "Camera") -> None:
-        """Рисует небо, облака, звёзды и дальние холмы с параллаксом."""
-        width = surface.get_width()
-        height = surface.get_height()
-
-        if self._sky_gradient is not None:
-            surface.blit(self._sky_gradient, (0, 0))
-        else:
-            surface.fill((16, 20, 34))
-
-        horizon = int(height * 0.68)
-        pygame.draw.rect(surface, (27, 33, 52), (0, horizon, width, height - horizon))
-
+        """Рисует многослойный лесной параллакс-фон."""
         cam_x = camera.camera.x
-        tick = self._background_tick
+        for layer, factor in zip(self._parallax_layers, PARALLAX_FACTORS):
+            self._draw_parallax_layer(surface, layer, cam_x, factor)
 
-        for star_x, star_y, star_size in self._sky_stars:
-            x = int(star_x - cam_x * 0.15) % (self.world_width + 200) - 100
-            if -10 <= x <= width + 10:
-                twinkle = 180 + int(75 * abs((tick + star_x) % 120 - 60) / 60)
-                pygame.draw.circle(surface, (twinkle, twinkle - 10, 220), (x, star_y), star_size)
+    def _draw_decorations(self, surface: pygame.Surface, camera: "Camera", kinds: tuple[str, ...]) -> None:
+        """Рисует деревья, кусты и траву с параллаксом."""
+        width = surface.get_width()
+        cam_x = camera.camera.x
+        cam_y = camera.camera.y
 
-        sun_center = (width - 140, 110)
-        for radius, alpha in ((74, 20), (50, 35), (26, 75)):
-            glow = pygame.Surface((radius * 2 + 8, radius * 2 + 8), pygame.SRCALPHA)
-            pygame.draw.circle(glow, (255, 220, 150, alpha), (glow.get_width() // 2, glow.get_height() // 2), radius)
-            surface.blit(glow, (sun_center[0] - glow.get_width() // 2, sun_center[1] - glow.get_height() // 2))
+        for world_x, anchor_y, kind, variant_index, factor in sorted(self._decorations, key=lambda entry: entry[4]):
+            if kind not in kinds:
+                continue
+            sprite = get_decoration_sprites(kind)[variant_index]
+            screen_x = int(world_x - cam_x * factor)
+            if screen_x + sprite.get_width() < -120 or screen_x > width + 120:
+                continue
 
-        for cloud_x, cloud_y, cloud_w, cloud_h in self._clouds:
-            x = int(cloud_x - cam_x * 0.25) % (self.world_width + 280) - 140
-            if -220 <= x <= width + 220:
-                cloud = pygame.Surface((cloud_w + 60, cloud_h + 20), pygame.SRCALPHA)
-                pygame.draw.ellipse(cloud, (230, 238, 255, 150), (0, 8, cloud_w, cloud_h))
-                pygame.draw.ellipse(cloud, (255, 255, 255, 90), (12, 0, cloud_w * 0.55, cloud_h * 0.8))
-                pygame.draw.ellipse(cloud, (255, 255, 255, 90), (cloud_w * 0.35, 2, cloud_w * 0.65, cloud_h * 0.75))
-                surface.blit(cloud, (x, cloud_y))
+            if kind in ("tree", "willow"):
+                sprite_rect = sprite.get_rect(midbottom=(screen_x, anchor_y - cam_y))
+            elif kind == "bush":
+                sprite_rect = sprite.get_rect(midbottom=(screen_x, anchor_y - cam_y + 4))
+            else:
+                sprite_rect = sprite.get_rect(midbottom=(screen_x, anchor_y - cam_y - 2))
 
-        def draw_hills(hills: list[tuple[int, int, int]], base_color: tuple[int, int, int], factor: float, shadow_color: tuple[int, int, int]) -> None:
-            for hill_x, hill_y, hill_w in hills:
-                x = int(hill_x - cam_x * factor) % (self.world_width + hill_w * 2) - hill_w
-                points = [
-                    (x, height),
-                    (x + hill_w // 2, hill_y - hill_w // 2),
-                    (x + hill_w, height),
-                ]
-                pygame.draw.polygon(surface, shadow_color, [(px + 8, py + 10) for px, py in points])
-                pygame.draw.polygon(surface, base_color, points)
-
-        draw_hills(self._hills_far, (40, 65, 92), 0.20, (26, 38, 58))
-        draw_hills(self._hills_near, (58, 88, 114), 0.38, (30, 46, 68))
-
-        ground_glow = pygame.Surface((width, 100), pygame.SRCALPHA)
-        pygame.draw.ellipse(ground_glow, (90, 110, 150, 38), (width * 0.1, 24, width * 0.8, 54))
-        surface.blit(ground_glow, (0, horizon - 20))
+            surface.blit(sprite, sprite_rect)

@@ -28,7 +28,7 @@ class PauseMenu:
         overlay.fill((0, 0, 0, 150))
         screen.blit(overlay, (0, 0))
 
-        title = self.title_font.render("Paused", True, TEXT_COLOR)
+        title = self.title_font.render("Пауза", True, TEXT_COLOR)
         # place title above the first button to avoid overlap
         title_y = self.resume_rect.top - 40
         title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, title_y))
@@ -84,3 +84,39 @@ class PauseMenu:
 
             pygame.display.flip()
             clock.tick(FPS)
+
+
+class GameOverMenu:
+    """Экран Game Over с кнопкой возврата в главное меню."""
+
+    def __init__(self) -> None:
+        pygame.font.init()
+        self.title_font = pygame.font.SysFont(None, 64)
+        self.btn_font = pygame.font.SysFont(None, 28)
+
+        self.btn_w, self.btn_h = 220, 56
+        self.main_menu_rect = pygame.Rect(
+            (SCREEN_WIDTH - self.btn_w) // 2,
+            SCREEN_HEIGHT // 2 + 20,
+            self.btn_w,
+            self.btn_h,
+        )
+
+    def render(self, screen: pygame.Surface) -> None:
+        overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 150))
+        screen.blit(overlay, (0, 0))
+
+        title = self.title_font.render("Игра окончена", True, TEXT_COLOR)
+        title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
+        screen.blit(title, title_rect)
+
+        pygame.draw.rect(screen, (200, 200, 200), self.main_menu_rect)
+        pygame.draw.rect(screen, (100, 100, 100), self.main_menu_rect, 3)
+        label = self.btn_font.render("В главное меню", True, (10, 10, 10))
+        screen.blit(label, label.get_rect(center=self.main_menu_rect.center))
+
+    def handle_mouse(self, pos: tuple[int, int]) -> str | None:
+        if self.main_menu_rect.collidepoint(pos):
+            return "main_menu"
+        return None
