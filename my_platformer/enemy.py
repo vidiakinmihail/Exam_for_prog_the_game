@@ -57,18 +57,43 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.left = platform.rect.right
 
     def _apply_gravity(self, platforms: list[pygame.sprite.Sprite]) -> None:
-        self.velocity_y += GRAVITY
-        self.rect.y += int(self.velocity_y)
+        if self.on_ground and not self._is_standing_on(platforms):
+            self.on_ground = False
+
+        if not self.on_ground:
+            self.velocity_y += GRAVITY
+            self.rect.y += int(self.velocity_y)
+        else:
+            self.velocity_y = 0
+
         self.on_ground = False
         for platform in platforms:
-            if self.rect.colliderect(platform.rect):
-                if self.velocity_y > 0:
-                    self.rect.bottom = platform.rect.top
-                    self.velocity_y = 0
-                    self.on_ground = True
-                elif self.velocity_y < 0:
-                    self.rect.top = platform.rect.bottom
-                    self.velocity_y = 0
+            if self.velocity_y >= 0 and (
+                self.rect.colliderect(platform.rect)
+                or (
+                    self.rect.bottom >= platform.rect.top - 1
+                    and self.rect.bottom <= platform.rect.top + 8
+                    and self.rect.right > platform.rect.left
+                    and self.rect.left < platform.rect.right
+                )
+            ):
+                self.rect.bottom = platform.rect.top
+                self.velocity_y = 0
+                self.on_ground = True
+            elif self.rect.colliderect(platform.rect) and self.velocity_y < 0:
+                self.rect.top = platform.rect.bottom
+                self.velocity_y = 0
+
+    def _is_standing_on(self, platforms: list[pygame.sprite.Sprite]) -> bool:
+        feet = self.rect.bottom
+        for platform in platforms:
+            if (
+                abs(feet - platform.rect.top) <= 1
+                and self.rect.right > platform.rect.left
+                and self.rect.left < platform.rect.right
+            ):
+                return True
+        return False
 
     def update(self, player: "Player", platforms: list[pygame.sprite.Sprite]) -> None:
         """Обновляет состояние врага и его физику."""
@@ -129,7 +154,7 @@ class Enemy(pygame.sprite.Sprite):
         if not self.facing_right:
             frame = pygame.transform.flip(frame, True, False)
 
-        frame_rect = frame.get_rect(midbottom=(rect.centerx, rect.bottom + 8))
+        frame_rect = frame.get_rect(midbottom=(int(rect.centerx), int(rect.bottom + 8)))
         shadow = pygame.Surface((frame_rect.width, 12), pygame.SRCALPHA)
         pygame.draw.ellipse(shadow, (0, 0, 0, 70), shadow.get_rect())
         surface.blit(shadow, (frame_rect.x, frame_rect.bottom - 8))

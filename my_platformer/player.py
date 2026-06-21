@@ -61,17 +61,36 @@ class Player:
                 elif self.velocity_x < 0:
                     self.rect.left = platform.rect.right
 
+    def _is_standing_on(self, platforms: list[pygame.sprite.Sprite]) -> bool:
+        """Проверяет, стоит ли игрок на платформе (даже без пересечения hitbox)."""
+        feet = self.rect.bottom
+        for platform in platforms:
+            if (
+                abs(feet - platform.rect.top) <= 1
+                and self.rect.right > platform.rect.left
+                and self.rect.left < platform.rect.right
+            ):
+                return True
+        return False
+
     def _apply_vertical_collision(self, platforms: list[pygame.sprite.Sprite]) -> None:
         self.on_ground = False
         for platform in platforms:
-            if self.rect.colliderect(platform.rect):
-                if self.velocity_y > 0:
-                    self.rect.bottom = platform.rect.top
-                    self.velocity_y = 0
-                    self.on_ground = True
-                elif self.velocity_y < 0:
-                    self.rect.top = platform.rect.bottom
-                    self.velocity_y = 0
+            if self.velocity_y >= 0 and (
+                self.rect.colliderect(platform.rect)
+                or (
+                    self.rect.bottom >= platform.rect.top - 1
+                    and self.rect.bottom <= platform.rect.top + 8
+                    and self.rect.right > platform.rect.left
+                    and self.rect.left < platform.rect.right
+                )
+            ):
+                self.rect.bottom = platform.rect.top
+                self.velocity_y = 0
+                self.on_ground = True
+            elif self.rect.colliderect(platform.rect) and self.velocity_y < 0:
+                self.rect.top = platform.rect.bottom
+                self.velocity_y = 0
 
     def _try_jump(self) -> None:
         """Выполняет прыжок, если был буфер нажатия и игрок стоит на земле или в coyote time."""
@@ -114,8 +133,15 @@ class Player:
 
         self._try_jump()
 
-        self.velocity_y += GRAVITY
-        self.rect.y += int(self.velocity_y)
+        if self.on_ground and not self._is_standing_on(platforms):
+            self.on_ground = False
+
+        if not self.on_ground:
+            self.velocity_y += GRAVITY
+            self.rect.y += int(self.velocity_y)
+        else:
+            self.velocity_y = 0
+
         self._apply_vertical_collision(platforms)
 
         if moving or not self.on_ground:
@@ -129,14 +155,15 @@ class Player:
         rect = camera.apply(self.rect)
         if not self.on_ground:
             frame = self.jump_frame
+        elif abs(self.velocity_x) > 0:
+            frame = self.walk_frames[(self.animation_tick // 6) % len(self.walk_frames)]
         else:
-            # временно убираем ходовую анимацию, чтобы убрать дрожание спрайта
             frame = self.idle_frame
 
         if not self.facing_right:
             frame = pygame.transform.flip(frame, True, False)
 
-        frame_rect = frame.get_rect(midbottom=(rect.centerx, rect.bottom))
+        frame_rect = frame.get_rect(midbottom=(int(rect.centerx), int(rect.bottom)))
         shadow = pygame.Surface((frame_rect.width, 12), pygame.SRCALPHA)
         pygame.draw.ellipse(shadow, (0, 0, 0, 70), shadow.get_rect())
         surface.blit(shadow, (frame_rect.x, frame_rect.bottom - 8))

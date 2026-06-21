@@ -37,7 +37,8 @@ def get_character_row(row_index: int, scale: tuple[int, int] | None = None) -> t
         if scale is not None:
             frame = pygame.transform.smoothscale(frame, scale)
 
+        # Привязываем кадры к нижнему краю, чтобы ноги не «прыгали» при ходьбе.
         normalized = pygame.Surface(target_size, pygame.SRCALPHA)
-        normalized.blit(frame, frame.get_rect(center=(target_size[0] // 2, target_size[1] // 2)))
+        normalized.blit(frame, frame.get_rect(midbottom=(target_size[0] // 2, target_size[1])))
         frames.append(normalized)
     return tuple(frames)

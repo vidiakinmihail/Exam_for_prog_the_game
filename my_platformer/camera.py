@@ -15,7 +15,8 @@ class Camera:
 
     def update(self, target_rect: pygame.Rect) -> None:
         """Центрирует камеру на цели и не выходит за границы уровня."""
-        self.camera.center = target_rect.center
+        self.camera.centerx = int(target_rect.centerx)
+        self.camera.centery = int(target_rect.centery)
         self.camera.left = max(0, min(self.camera.left, self.world_width - self.camera.width))
         self.camera.top = max(0, min(self.camera.top, self.world_height - self.camera.height))
 

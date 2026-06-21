@@ -60,6 +60,8 @@ class World:
         self._clouds: list[tuple[int, int, int, int]] = []
         self._hills_far: list[tuple[int, int, int]] = []
         self._hills_near: list[tuple[int, int, int]] = []
+        self._sky_gradient: pygame.Surface | None = None
+        self._background_tick = 0
 
         self._load_level(level_num, keep_lives=player_lives)
 
@@ -82,6 +84,21 @@ class World:
             (rng.randrange(0, self.world_width), rng.randrange(430, 520), rng.randrange(120, 220))
             for _ in range(10)
         ]
+        self._build_sky_gradient()
+
+    def _build_sky_gradient(self) -> None:
+        """Один раз рисует градиент неба — так фон быстрее и плавнее."""
+        height = SCREEN_HEIGHT
+        width = SCREEN_WIDTH
+        self._sky_gradient = pygame.Surface((width, height))
+        for y in range(height):
+            t = y / max(1, height - 1)
+            color = (
+                int(20 + 12 * t),
+                int(26 + 18 * t),
+                int(44 + 28 * t),
+            )
+            pygame.draw.line(self._sky_gradient, color, (0, y), (width, y))
 
     def _reset_player_for_level(self, keep_lives: int | None = None) -> None:
         self.player.rect.topleft = PLAYER_START_POS
@@ -164,6 +181,8 @@ class World:
         if self.game_over or self.level_complete or self.game_completed:
             return
 
+        self._background_tick += 1
+
         platforms = self.platforms.sprites()
         self.player.update(platforms, move_left, move_right)
         for enemy in self.enemies:
@@ -216,24 +235,22 @@ class World:
         width = surface.get_width()
         height = surface.get_height()
 
-        for y in range(height):
-            t = y / max(1, height - 1)
-            color = (
-                int(20 + 12 * t),
-                int(26 + 18 * t),
-                int(44 + 28 * t),
-            )
-            pygame.draw.line(surface, color, (0, y), (width, y))
+        if self._sky_gradient is not None:
+            surface.blit(self._sky_gradient, (0, 0))
+        else:
+            surface.fill((16, 20, 34))
 
         horizon = int(height * 0.68)
         pygame.draw.rect(surface, (27, 33, 52), (0, horizon, width, height - horizon))
 
         cam_x = camera.camera.x
+        tick = self._background_tick
 
         for star_x, star_y, star_size in self._sky_stars:
             x = int(star_x - cam_x * 0.15) % (self.world_width + 200) - 100
             if -10 <= x <= width + 10:
-                pygame.draw.circle(surface, (255, 245, 220), (x, star_y), star_size)
+                twinkle = 180 + int(75 * abs((tick + star_x) % 120 - 60) / 60)
+                pygame.draw.circle(surface, (twinkle, twinkle - 10, 220), (x, star_y), star_size)
 
         sun_center = (width - 140, 110)
         for radius, alpha in ((74, 20), (50, 35), (26, 75)):
