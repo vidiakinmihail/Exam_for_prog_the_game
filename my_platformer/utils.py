@@ -9,7 +9,7 @@ import pygame
 from .config import TEXT_COLOR
 
 
-HUD_PANEL_SIZE = (280, 135)  # Немного увеличили панель для лучшего распределения элементов
+HUD_PANEL_SIZE = (280, 135)
 HUD_PANEL_MARGIN = 10
 
 HUD_BG = (28, 22, 36, 215)
@@ -41,13 +41,10 @@ def _load_heart_sprites() -> tuple[pygame.Surface, pygame.Surface]:
             empty_heart = pygame.Surface((single_w, h), pygame.SRCALPHA)
             empty_heart.blit(full_sheet, (0, 0), pygame.Rect(single_w, 0, single_w, h))
         else:
-            # Если картинка квадратная — это одно целое сердце. 
-            # Делаем пустую версию программно (применяем полупрозрачность)
             full_heart = full_sheet
             empty_heart = full_sheet.copy()
             empty_heart.fill((100, 100, 100, 100), special_flags=pygame.BLEND_RGBA_MULT)
             
-        # Масштабируем до аккуратного игрового размера (24x24 пикселя)
         target_size = (24, 24)
         return (
             pygame.transform.smoothscale(full_heart, target_size),

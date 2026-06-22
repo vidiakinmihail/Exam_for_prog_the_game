@@ -29,7 +29,6 @@ class PauseMenu:
         screen.blit(overlay, (0, 0))
 
         title = self.title_font.render("Пауза", True, TEXT_COLOR)
-        # place title above the first button to avoid overlap
         title_y = self.resume_rect.top - 40
         title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, title_y))
         screen.blit(title, title_rect)

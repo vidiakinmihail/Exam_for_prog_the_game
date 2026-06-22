@@ -19,7 +19,6 @@ WORLD_WIDTH = 1600
 WORLD_HEIGHT = 800
 
 ITEM_RADIUS = 10
-# Все Y-координаты предметов увеличены на 200
 ITEMS_LIST = [
     (300, 720),
     (550, 620),
@@ -27,8 +26,6 @@ ITEMS_LIST = [
     (640, 320),
 ]
 
-# Все Y-координаты платформ увеличены на 200. 
-# Основная земля теперь находится на Y = 750 (самый низ мира)
 PLATFORMS_LIST = [
     (0, 750, 800, 50),
     (200, 650, 100, 20),
@@ -37,7 +34,6 @@ PLATFORMS_LIST = [
     (600, 350, 80, 20),
 ]
 
-# Координаты спавна врага опущены на +200
 ENEMY_SPAWN = (400, 720)
 ENEMY_PATROL_MIN_X = 300
 ENEMY_PATROL_MAX_X = 500
@@ -50,7 +46,6 @@ ENEMY_ATTACK_COOLDOWN_FRAMES = 60
 ENEMY_SIZE = 32
 ENEMY_SPRITE_SIZE = (60, 60)
 
-# Дверь/Портал также опущены на +200 по Y
 DOOR_SPAWN = (610, 310)
 PORTAL_SIZE = (80, 80)
 DOOR_SIZE = PORTAL_SIZE
