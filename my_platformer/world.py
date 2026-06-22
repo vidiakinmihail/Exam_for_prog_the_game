@@ -34,13 +34,13 @@ class Platform(pygame.sprite.Sprite):
 class World:
     """Хранит все игровые объекты и данные текущего уровня."""
 
-    GROUND_Y = 550
+    GROUND_Y = 750
 
     def __init__(self, level_num: int = START_LEVEL, player_lives: int = PLAYER_MAX_LIVES) -> None:
         self.player = Player(*PLAYER_START_POS)
         self.player.lives = player_lives
         self.world_width = WORLD_WIDTH
-        self.world_height = SCREEN_HEIGHT
+        self.world_height = WORLD_HEIGHT
         self.max_level = max(LEVELS)
 
         self.platforms = pygame.sprite.Group()
