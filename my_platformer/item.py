@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pygame
 
 from .config import PORTAL_SIZE
 from .sprites import get_coin_frames, get_portal_frames
+
+if TYPE_CHECKING:
+    from .camera import Camera
 
 
 class Item(pygame.sprite.Sprite):
@@ -36,7 +41,7 @@ class Item(pygame.sprite.Sprite):
         dy = self.center_y - closest_y
         return dx * dx + dy * dy <= self.radius * self.radius
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
         """Рисует монету с учётом камеры."""
         if not self.alive():
             return
@@ -61,7 +66,7 @@ class Portal(pygame.sprite.Sprite):
     def update(self) -> None:
         self.animation_tick += 1
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
         """Рисует текущий кадр портала с учётом камеры."""
         rect = camera.apply(self.rect)
         frame_index = (self.animation_tick // 4) % len(self.frames)

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pygame
 
 from .config import (
@@ -17,6 +19,9 @@ from .config import (
     GRAVITY,
 )
 from .sprites import get_character_row
+
+if TYPE_CHECKING:
+    from .camera import Camera
 
 PATROL = "patrol"
 CHASE = "chase"
@@ -142,7 +147,7 @@ class Enemy(pygame.sprite.Sprite):
         if moving:
             self.animation_tick += 1
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
         """Рисует врага с учётом камеры."""
         rect = camera.apply(self.rect)
         frame_index = 0

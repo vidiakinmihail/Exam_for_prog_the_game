@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pygame
 
 from .config import (
@@ -14,6 +16,9 @@ from .config import (
     PLAYER_SIZE,
 )
 from .sprites import get_character_row
+
+if TYPE_CHECKING:
+    from .camera import Camera
 
 
 class Player:
@@ -150,7 +155,7 @@ class Player:
         if self.jump_buffer_frames > 0:
             self.jump_buffer_frames -= 1
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
         """Рисует игрока с учётом камеры."""
         rect = camera.apply(self.rect)
         if not self.on_ground:
