@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pygame
 
 from .config import PORTAL_SIZE
 from .sprites import get_coin_frames, get_portal_frames
+
+if TYPE_CHECKING:
+    from .camera import Camera
 
 
 class Item(pygame.sprite.Sprite):
@@ -29,15 +34,24 @@ class Item(pygame.sprite.Sprite):
         self.animation_tick += 1
 
     def collides_with(self, player_rect: pygame.Rect) -> bool:
-        """Проверяет пересечение круга с прямоугольником игрока."""
+        """Проверяет пересечение круга (монеты) с прямоугольником игрока.
+
+        Алгоритм: находит ближайшую точку на прямоугольнике к центру круга и
+        сравнивает квадрат расстояния с квадратом радиуса.
+
+        Сложность: O(1) — константное число арифметических операций.
+        """
         closest_x = max(player_rect.left, min(self.center_x, player_rect.right))
         closest_y = max(player_rect.top, min(self.center_y, player_rect.bottom))
         dx = self.center_x - closest_x
         dy = self.center_y - closest_y
         return dx * dx + dy * dy <= self.radius * self.radius
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
-        """Рисует монету с учётом камеры."""
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
+        """Рисует монету с учётом камеры.
+
+        Сложность: O(1) за одну монету при рисовании (зависит от размеров кадра).
+        """
         if not self.alive():
             return
         frame_index = (self.animation_tick // 6) % len(self.frames)
@@ -61,8 +75,11 @@ class Portal(pygame.sprite.Sprite):
     def update(self) -> None:
         self.animation_tick += 1
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
-        """Рисует текущий кадр портала с учётом камеры."""
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
+        """Рисует текущий кадр портала с учётом камеры.
+
+        Сложность: O(1) за вызов.
+        """
         rect = camera.apply(self.rect)
         frame_index = (self.animation_tick // 4) % len(self.frames)
         frame = self.frames[frame_index]

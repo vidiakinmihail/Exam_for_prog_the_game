@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pygame
 
 from .config import (
@@ -17,6 +19,10 @@ from .config import (
     GRAVITY,
 )
 from .sprites import get_character_row
+
+if TYPE_CHECKING:
+    from .camera import Camera
+    from .player import Player
 
 PATROL = "patrol"
 CHASE = "chase"
@@ -44,11 +50,25 @@ class Enemy(pygame.sprite.Sprite):
         self.facing_right = True
 
     def _should_chase(self, player_rect: pygame.Rect) -> bool:
+        """Определяет, стоит ли врагу начать преследование игрока.
+
+        Алгоритм: вычисляет горизонтальную и вертикальную дистанцию между центрами
+        и сравнивает с порогами `ENEMY_CHASE_RANGE` и `ENEMY_VERTICAL_TOLERANCE`.
+
+        Сложность: O(1) за проверку.
+        """
         horizontal_distance = abs(player_rect.centerx - self.rect.centerx)
         vertical_distance = abs(player_rect.centery - self.rect.centery)
         return horizontal_distance <= ENEMY_CHASE_RANGE and vertical_distance <= ENEMY_VERTICAL_TOLERANCE
 
     def _move_horizontally(self, delta_x: int, platforms: list[pygame.sprite.Sprite]) -> None:
+        """Двигает врага по горизонтали и разрешает коллизии с платформами.
+
+        Алгоритм: сдвигает `rect` на `delta_x`, затем проходит по всем платформам и в случае
+        пересечения отталкивает врага, устанавливая его край у соответствующей стороны платформы.
+
+        Сложность: O(N) по числу платформ.
+        """
         self.rect.x += delta_x
         for platform in platforms:
             if self.rect.colliderect(platform.rect):
@@ -58,6 +78,15 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.left = platform.rect.right
 
     def _apply_gravity(self, platforms: list[pygame.sprite.Sprite]) -> None:
+        """Применяет гравитацию и разрешает вертикальные коллизии для врага.
+
+        Алгоритм: если враг не на земле, интегрирует вертикальную скорость `velocity_y`,
+        сдвигает `rect` по Y и затем проходит по платформам, чтобы определить приземление
+        или столкновение головой. В случае приземления корректирует `rect.bottom` и
+        обнуляет вертикальную скорость.
+
+        Сложность: O(N) по числу платформ.
+        """
         if self.on_ground and not self._is_standing_on(platforms):
             self.on_ground = False
 
@@ -97,7 +126,14 @@ class Enemy(pygame.sprite.Sprite):
         return False
 
     def update(self, player: "Player", platforms: list[pygame.sprite.Sprite]) -> None:
-        """Обновляет состояние врага и его физику."""
+        """Обновляет состояние врага (FSM) и его физику.
+
+        Алгоритм: если враг в cooldown — откатывается и ждёт. Иначе проверяет
+        пересечение с игроком (атака), затем условие преследования (`_should_chase`).
+        Выбор состояния и движение оформлены в простом конечном автомате.
+
+        Сложность: O(N) по числу платформ (из-за разрешения коллизий).
+        """
         moving = False
         if self.cooldown_frames > 0:
             self.state = ATTACK_COOLDOWN
@@ -142,8 +178,11 @@ class Enemy(pygame.sprite.Sprite):
         if moving:
             self.animation_tick += 1
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
-        """Рисует врага с учётом камеры."""
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
+        """Рисует врага с учётом камеры и выбирает кадр анимации по состоянию.
+
+        Сложность: O(1) за вызов.
+        """
         rect = camera.apply(self.rect)
         frame_index = 0
         if self.state == ATTACK_COOLDOWN:

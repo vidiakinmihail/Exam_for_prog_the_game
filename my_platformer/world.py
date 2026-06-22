@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import random
+from typing import TYPE_CHECKING
 
 import pygame
 
-from .config import PLAYER_MAX_LIVES, PLAYER_START_POS, SCREEN_HEIGHT, SCREEN_WIDTH, START_LEVEL, WORLD_WIDTH
+from .config import PLAYER_MAX_LIVES, PLAYER_START_POS, SCREEN_HEIGHT, SCREEN_WIDTH, START_LEVEL, WORLD_WIDTH, WORLD_HEIGHT
 from .enemy import Enemy
 from .item import Portal, Item
 from .levels import LEVELS
@@ -14,6 +15,9 @@ from .player import Player
 from .sprites import PARALLAX_FACTORS, get_decoration_sprites, get_parallax_layers
 from .tiles import draw_tiled_platform
 from .utils import draw_hud_panel, draw_text
+
+if TYPE_CHECKING:
+    from .camera import Camera
 
 
 class Platform(pygame.sprite.Sprite):
@@ -23,20 +27,20 @@ class Platform(pygame.sprite.Sprite):
         super().__init__()
         self.rect = pygame.Rect(x, y, width, height)
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
         draw_tiled_platform(surface, camera.apply(self.rect))
 
 
 class World:
     """Хранит все игровые объекты и данные текущего уровня."""
 
-    GROUND_Y = 550
+    GROUND_Y = 750
 
     def __init__(self, level_num: int = START_LEVEL, player_lives: int = PLAYER_MAX_LIVES) -> None:
         self.player = Player(*PLAYER_START_POS)
         self.player.lives = player_lives
         self.world_width = WORLD_WIDTH
-        self.world_height = SCREEN_HEIGHT
+        self.world_height = WORLD_HEIGHT
         self.max_level = max(LEVELS)
 
         self.platforms = pygame.sprite.Group()
@@ -204,7 +208,7 @@ class World:
         if self.player.lives <= 0:
             self.game_over = True
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
         """Рисует уровень и HUD."""
         self._draw_background(surface, camera)
         self._draw_decorations(surface, camera, kinds=("tree", "willow"))
@@ -256,13 +260,13 @@ class World:
             surface.blit(layer, (x, 0))
             x += layer_width
 
-    def _draw_background(self, surface: pygame.Surface, camera: "Camera") -> None:
+    def _draw_background(self, surface: pygame.Surface, camera: Camera) -> None:
         """Рисует многослойный лесной параллакс-фон."""
         cam_x = camera.camera.x
         for layer, factor in zip(self._parallax_layers, PARALLAX_FACTORS):
             self._draw_parallax_layer(surface, layer, cam_x, factor)
 
-    def _draw_decorations(self, surface: pygame.Surface, camera: "Camera", kinds: tuple[str, ...]) -> None:
+    def _draw_decorations(self, surface: pygame.Surface, camera: Camera, kinds: tuple[str, ...]) -> None:
         """Рисует деревья, кусты и траву с параллаксом."""
         width = surface.get_width()
         cam_x = camera.camera.x

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pygame
 
 from .config import (
@@ -14,6 +16,9 @@ from .config import (
     PLAYER_SIZE,
 )
 from .sprites import get_character_row
+
+if TYPE_CHECKING:
+    from .camera import Camera
 
 
 class Player:
@@ -54,6 +59,13 @@ class Player:
         self.on_ground = False
 
     def _apply_horizontal_collision(self, platforms: list[pygame.sprite.Sprite]) -> None:
+        """Разрешение горизонтальных коллизий между игроком и платформами.
+
+        Алгоритм: пробегает по списку платформ и при пересечении прямоугольников
+        перемещает игрока в край платформы в зависимости от направления движения.
+
+        Сложность: O(N) по числу платформ за обновление.
+        """
         for platform in platforms:
             if self.rect.colliderect(platform.rect):
                 if self.velocity_x > 0:
@@ -62,7 +74,13 @@ class Player:
                     self.rect.left = platform.rect.right
 
     def _is_standing_on(self, platforms: list[pygame.sprite.Sprite]) -> bool:
-        """Проверяет, стоит ли игрок на платформе (даже без пересечения hitbox)."""
+        """Проверяет, стоит ли игрок на платформе (даже без пересечения hitbox).
+
+        Алгоритм: сравнивает координату стопы игрока с вершиной каждой платформы
+        с небольшой допуском, учитывает горизонтальное перекрытие.
+
+        Сложность: O(N) по числу платформ.
+        """
         feet = self.rect.bottom
         for platform in platforms:
             if (
@@ -74,6 +92,14 @@ class Player:
         return False
 
     def _apply_vertical_collision(self, platforms: list[pygame.sprite.Sprite]) -> None:
+        """Разрешение вертикальных коллизий и детекция касания земли.
+
+        Алгоритм: проходит по списку платформ; если игрок падает и пересекает
+        платформу, ставит нижнюю границу игрока на верхнюю грань платформы и обнуляет
+        вертикальную скорость. Также обрабатывает столкновение головой.
+
+        Сложность: O(N) по числу платформ за обновление.
+        """
         self.on_ground = False
         for platform in platforms:
             if self.velocity_y >= 0 and (
@@ -93,7 +119,13 @@ class Player:
                 self.velocity_y = 0
 
     def _try_jump(self) -> None:
-        """Выполняет прыжок, если был буфер нажатия и игрок стоит на земле или в coyote time."""
+        """Выполняет прыжок при наличии буфера нажатия или coyote time.
+
+        Алгоритм: проверяет флаги `jump_buffer_frames` и `coyote_frames` и при
+        выполнении условий устанавливает вертикальную скорость в `JUMP_POWER`.
+
+        Сложность: O(1).
+        """
         can_jump = (self.on_ground or self.coyote_frames > 0) and self.knockback_frames == 0
         if self.jump_buffer_frames > 0 and can_jump:
             self.velocity_y = JUMP_POWER
@@ -102,7 +134,14 @@ class Player:
             self.coyote_frames = 0
 
     def update(self, platforms: list[pygame.sprite.Sprite], move_left: bool, move_right: bool) -> None:
-        """Обновляет физику игрока и обрабатывает столкновения с платформами."""
+        """Обновляет физику игрока, состояние анимации и обрабатывает столкновения.
+
+        Алгоритм: рассчитывает горизонтальную скорость, применяет горизонтальные
+        и вертикальные коллизии, обновляет гравитацию, coyote/jump-buffer
+        и инкремент таймеров анимации.
+
+        Сложность: O(N) по числу платформ (коллизии) + O(1) остальные операции.
+        """
         moving = False
         if self.knockback_frames > 0:
             self.velocity_x = self.knockback_direction * PLAYER_KNOCKBACK_SPEED
@@ -150,8 +189,15 @@ class Player:
         if self.jump_buffer_frames > 0:
             self.jump_buffer_frames -= 1
 
-    def draw(self, surface: pygame.Surface, camera: "Camera") -> None:
-        """Рисует игрока с учётом камеры."""
+    def draw(self, surface: pygame.Surface, camera: Camera) -> None:
+        """Рисует игрока с учётом камеры и тени.
+
+        Описание: выбирает текущий кадр анимации в зависимости от состояния
+        (прыжок / ходьба / простое стояние), выполняет отражение спрайта и
+        рисует тень под персонажем.
+
+        Сложность: O(1) за вызов (рисование — зависит от размера поверхности).
+        """
         rect = camera.apply(self.rect)
         if not self.on_ground:
             frame = self.jump_frame
