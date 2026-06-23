@@ -175,6 +175,38 @@ class World:
             if self.level_num == self.max_level:
                 self.game_completed = True
 
+    def _resolve_enemy_collisions(self) -> None:
+        """Проверяет и обрабатывает столкновения врагов между собой.
+        
+        Алгоритмическая сложность: O(n^2), где n — количество врагов на уровне.
+        Использует вложенный цикл для попарного сравнения каждого врага с каждым.
+        """
+        enemies_list = self.enemies.sprites()
+        n = len(enemies_list)
+        
+        for i in range(n):
+            for j in range(i + 1, n):
+                enemy_a = enemies_list[i]
+                enemy_b = enemies_list[j]
+                
+                # Если хитбоксы двух разных врагов пересеклись
+                if enemy_a.rect.colliderect(enemy_b.rect):
+                    # Разворачиваем обоих врагов в противоположные стороны
+                    if hasattr(enemy_a, 'direction') and hasattr(enemy_b, 'direction'):
+                        enemy_a.direction *= -1
+                        enemy_b.direction *= -1
+                    elif hasattr(enemy_a, 'velocity_x') and hasattr(enemy_b, 'velocity_x'):
+                        enemy_a.velocity_x *= -1
+                        enemy_b.velocity_x *= -1
+                    
+                    # Толкаем их в стороны, чтобы предотвратить застревание в одном кадре
+                    if enemy_a.rect.x < enemy_b.rect.x:
+                        enemy_a.rect.x -= 2
+                        enemy_b.rect.x += 2
+                    else:
+                        enemy_a.rect.x += 2
+                        enemy_b.rect.x -= 2
+
     def next_level(self) -> bool:
         """Переходит на следующий уровень, сохраняя жизни игрока."""
         if self.level_num >= self.max_level:
@@ -192,8 +224,12 @@ class World:
 
         platforms = self.platforms.sprites()
         self.player.update(platforms, move_left, move_right)
+        
         for enemy in self.enemies:
             enemy.update(self.player, platforms)
+
+        # Вызов созданного алгоритма попарной проверки сложности O(n^2)
+        self._resolve_enemy_collisions()
 
         for item in self.items:
             item.update()
